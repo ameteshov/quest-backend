@@ -1,0 +1,15 @@
+{
+    "name": "Agile test",
+    "content": [
+        {
+            "text": "How can you review your flexibility from 1 to 5?",
+            "from": 1,
+            "to": 5
+        },
+        {
+            "text": "How can you review your availability from 1 to 8?",
+            "from": 1,
+            "to": 8
+        }
+    ]
+}

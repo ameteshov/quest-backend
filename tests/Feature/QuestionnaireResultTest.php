@@ -31,7 +31,7 @@ class QuestionnaireResultTest extends TestCase
             'name' => 'vasya ignatiy'
         ];
 
-        $response = $this->actingAs($this->userAbleSend)->json('post', '/api/questionnaires/1/send', [
+        $response = $this->actingAs($this->userAbleSend)->json('post', '/questionnaires/1/send', [
             'list' => [$data]
         ]);
 
@@ -50,7 +50,7 @@ class QuestionnaireResultTest extends TestCase
             'name' => 'vasya ignatiy'
         ];
 
-        $response = $this->actingAs($this->userUnableSend)->json('post', '/api/questionnaires/1/send', [
+        $response = $this->actingAs($this->userUnableSend)->json('post', '/questionnaires/1/send', [
             'list' => [$data]
         ]);
 
@@ -64,7 +64,7 @@ class QuestionnaireResultTest extends TestCase
             'name' => 'vasya ignatiy'
         ];
 
-        $response = $this->json('post', '/api/questionnaires/1/send', [
+        $response = $this->json('post', '/questionnaires/1/send', [
             'list' => [$data]
         ]);
 
@@ -78,7 +78,7 @@ class QuestionnaireResultTest extends TestCase
             'name' => 'vasya ignatiy'
         ];
 
-        $response = $this->actingAs($this->userAbleSend)->json('post', '/api/questionnaires/0/send', [
+        $response = $this->actingAs($this->userAbleSend)->json('post', '/questionnaires/0/send', [
             'list' => [$data]
         ]);
 
@@ -90,14 +90,14 @@ class QuestionnaireResultTest extends TestCase
      */
     public function testSendInvalidRequest($data)
     {
-        $response = $this->actingAs($this->userAbleSend)->json('post', '/api/questionnaires/1/send', $data);
+        $response = $this->actingAs($this->userAbleSend)->json('post', '/questionnaires/1/send', $data);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testGetByHash()
     {
-        $response = $this->json('get', "api/forms/{$this->form->access_hash}");
+        $response = $this->json('get', "/forms/{$this->form->access_hash}");
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -106,21 +106,21 @@ class QuestionnaireResultTest extends TestCase
 
     public function testGetByHashFormSubmitted()
     {
-        $response = $this->json('get', "api/forms/{$this->submittedForm->access_hash}");
+        $response = $this->json('get', "/forms/{$this->submittedForm->access_hash}");
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function testGetByHashNotExists()
     {
-        $response = $this->json('get', "api/form/0192");
+        $response = $this->json('get', '/form/0192');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
 //    public function testSubmit()
 //    {
-//        $request = $this->json('post', "api/form/{$this->form->access_hash}", [
+//        $request = $this->json('post', "/form/{$this->form->access_hash}", [
 //            ''
 //        ]);
 //    }

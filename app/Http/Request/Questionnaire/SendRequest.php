@@ -18,7 +18,7 @@ class SendRequest extends Request
     {
         return [
             'list' => 'required|array',
-            'list.*.email' => 'string|email',
+            'list.*.email' => 'string|required|email',
             'list.*.name' => 'string|required'
         ];
     }

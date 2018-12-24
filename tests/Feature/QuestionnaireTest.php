@@ -23,7 +23,7 @@ class QuestionnaireTest extends TestCase
     {
         $data = $this->getJsonFixture('create.json');
 
-        $response = $this->actingAs($this->admin)->json('post', '/api/questionnaires', $data);
+        $response = $this->actingAs($this->admin)->json('post', '/questionnaires', $data);
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -37,7 +37,7 @@ class QuestionnaireTest extends TestCase
     {
         $data = $this->getJsonFixture('create.json');
 
-        $response = $this->actingAs($this->user)->json('post', '/api/questionnaires', $data);
+        $response = $this->actingAs($this->user)->json('post', '/questionnaires', $data);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
@@ -46,7 +46,7 @@ class QuestionnaireTest extends TestCase
     {
         $data = $this->getJsonFixture('create.json');
 
-        $response = $this->json('post', '/api/questionnaires', $data);
+        $response = $this->json('post', '/questionnaires', $data);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
@@ -57,14 +57,14 @@ class QuestionnaireTest extends TestCase
      * */
     public function testCreateWrongData($requestData)
     {
-        $response = $this->actingAs($this->admin)->json('post', '/api/questionnaires', $requestData);
+        $response = $this->actingAs($this->admin)->json('post', '/questionnaires', $requestData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testUpdate()
     {
-        $response = $this->actingAs($this->admin)->json('put', '/api/questionnaires/1', [
+        $response = $this->actingAs($this->admin)->json('put', '/questionnaires/1', [
             'name' => 'new name',
             'content' => ['test' => 1]
         ]);
@@ -80,7 +80,7 @@ class QuestionnaireTest extends TestCase
 
     public function testUpdateNoPermissions()
     {
-        $response = $this->actingAs($this->user)->json('put', '/api/questionnaires/1', [
+        $response = $this->actingAs($this->user)->json('put', '/questionnaires/1', [
             'name' => 'new name',
             'content' => ['test' => 1]
         ]);
@@ -90,7 +90,7 @@ class QuestionnaireTest extends TestCase
 
     public function testUpdateNoAuth()
     {
-        $response = $this->json('put', '/api/questionnaires/1', [
+        $response = $this->json('put', '/questionnaires/1', [
             'name' => 'new name',
             'content' => ['test' => 1]
         ]);
@@ -100,7 +100,7 @@ class QuestionnaireTest extends TestCase
 
     public function testUpdateWrongData()
     {
-        $response = $this->actingAs($this->admin)->json('put', '/api/questionnaires/1', [
+        $response = $this->actingAs($this->admin)->json('put', '/questionnaires/1', [
             'name' => 123412,
             'content' => 'some string'
         ]);
@@ -113,7 +113,7 @@ class QuestionnaireTest extends TestCase
      */
     public function testSearch($filters, $fixture)
     {
-        $response = $this->actingAs($this->admin)->json('get', 'api/questionnaires', $filters);
+        $response = $this->actingAs($this->admin)->json('get', '/questionnaires', $filters);
 
         $response->assertExactJson($this->getJsonFixture($fixture));
     }

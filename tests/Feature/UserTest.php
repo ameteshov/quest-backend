@@ -23,7 +23,7 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('create.json');
 
-        $response = $this->actingAs($this->admin)->json('post', 'api/users', $data);
+        $response = $this->actingAs($this->admin)->json('post', '/users', $data);
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonFragment($data);
@@ -33,7 +33,7 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('create.json');
 
-        $response = $this->json('post', 'api/users', $data);
+        $response = $this->json('post', '/users', $data);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
@@ -42,7 +42,7 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('create.json');
 
-        $response = $this->actingAs($this->user)->json('post', 'api/users', $data);
+        $response = $this->actingAs($this->user)->json('post', '/users', $data);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
@@ -52,7 +52,7 @@ class UserTest extends TestCase
         $data = $this->getJsonFixture('create.json');
         $data['email'] = $this->user->email;
 
-        $response = $this->actingAs($this->admin)->json('post', 'api/users', $data);
+        $response = $this->actingAs($this->admin)->json('post', '/users', $data);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -62,7 +62,7 @@ class UserTest extends TestCase
      */
     public function testCreateInvalidData($requestData)
     {
-        $response = $this->actingAs($this->admin)->json('post', 'api/users', $requestData);
+        $response = $this->actingAs($this->admin)->json('post', '/users', $requestData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -71,7 +71,7 @@ class UserTest extends TestCase
     {
         $data = ['name' => 'new name'];
 
-        $response = $this->actingAs($this->admin)->json('put', "api/users/{$this->user->id}", $data);
+        $response = $this->actingAs($this->admin)->json('put', "/users/{$this->user->id}", $data);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
         $this->assertDatabaseHas('users',
@@ -83,7 +83,7 @@ class UserTest extends TestCase
     {
         $data = ['name' => 'new name'];
 
-        $response = $this->json('put', "api/users/{$this->user->id}", $data);
+        $response = $this->json('put', "/users/{$this->user->id}", $data);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
@@ -92,7 +92,7 @@ class UserTest extends TestCase
     {
         $data = ['name' => 'new name'];
 
-        $response = $this->actingAs($this->user)->json('put', "api/users/{$this->admin->id}", $data);
+        $response = $this->actingAs($this->user)->json('put', "/users/{$this->admin->id}", $data);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }

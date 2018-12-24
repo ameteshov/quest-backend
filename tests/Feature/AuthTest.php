@@ -18,7 +18,7 @@ class AuthTest extends TestCase
 
     public function testAuth()
     {
-        $response = $this->json('post', '/api/auth/login', [
+        $response = $this->json('post', '/auth/login', [
             'email' => $this->admin->email,
             'password' => '111111'
         ]);
@@ -28,7 +28,7 @@ class AuthTest extends TestCase
 
     public function testAuthWrongPassword()
     {
-        $response = $this->json('post', '/api/auth/login', [
+        $response = $this->json('post', '/auth/login', [
             'email' => $this->admin->email,
             'password' => '111112'
         ]);
@@ -38,7 +38,7 @@ class AuthTest extends TestCase
 
     public function testAuthNotExists()
     {
-        $response = $this->json('post', '/api/auth/login', [
+        $response = $this->json('post', '/auth/login', [
             'email' => 'some@mail.ru',
             'password' => '111112'
         ]);
@@ -48,7 +48,7 @@ class AuthTest extends TestCase
 
     public function testResetPassword()
     {
-        $response = $this->json('post', '/api/auth/reset-password', [
+        $response = $this->json('post', '/auth/reset-password', [
             'email' => 'admin@example.net'
         ]);
 
@@ -57,7 +57,7 @@ class AuthTest extends TestCase
 
     public function testResetWrongEmail()
     {
-        $response = $this->json('post', '/api/auth/reset-password', [
+        $response = $this->json('post', '/auth/reset-password', [
             'email' => 'some@mail'
         ]);
 
@@ -66,7 +66,7 @@ class AuthTest extends TestCase
 
     public function testResetNotExists()
     {
-        $response = $this->json('post', '/api/auth/reset-password', [
+        $response = $this->json('post', '/auth/reset-password', [
             'email' => 'some@mail.to'
         ]);
 
@@ -75,7 +75,7 @@ class AuthTest extends TestCase
 
     public function testRefreshToken()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/api/auth/refresh');
+        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
@@ -99,7 +99,7 @@ class AuthTest extends TestCase
             'confirm' => '111111'
         ];
 
-        $response = $this->json('post', '/api/auth/register', $requestData);
+        $response = $this->json('post', '/auth/register', $requestData);
 
         $this->assertDatabaseHas('users', array_except($requestData, ['password', 'confirm']));
 
@@ -115,7 +115,7 @@ class AuthTest extends TestCase
             'confirm' => '111111'
         ];
 
-        $response = $this->json('post', '/api/auth/register', $requestData);
+        $response = $this->json('post', '/auth/register', $requestData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -127,7 +127,7 @@ class AuthTest extends TestCase
      **/
     public function testRegisterWrongData($requestData)
     {
-        $response = $this->json('post', '/api/auth/register', $requestData);
+        $response = $this->json('post', '/auth/register', $requestData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }

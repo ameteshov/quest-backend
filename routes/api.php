@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
-    AuthController, QuestionnaireController, UserController
+    AuthController, QuestionnaireController, UserController, PaymentController
 };
 
 /*
@@ -46,4 +46,6 @@ Route::middleware($authGroup)->group(function () {
     Route::get('users/{id}', UserController::class.'@get');
     Route::delete('users/{id}', UserController::class.'@delete');
     Route::put('users/{id}', UserController::class.'@update');
+
+    Route::post('payments', PaymentController::class.'@create');
 });

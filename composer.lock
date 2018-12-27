@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65e3555c2d0a073b9d671b943e194a02",
+    "content-hash": "226d0b9181981352ca8efcd65e4405f0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3020,6 +3020,44 @@
                 "environment"
             ],
             "time": "2018-07-29T20:33:41+00:00"
+        },
+        {
+            "name": "yandex-money/yandex-checkout-sdk-php",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yandex-money/yandex-checkout-sdk-php.git",
+                "reference": "4e59e233b49105433efc96772845255038e4f88e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yandex-money/yandex-checkout-sdk-php/zipball/4e59e233b49105433efc96772845255038e4f88e",
+                "reference": "4e59e233b49105433efc96772845255038e4f88e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "ext-xml": "*",
+                "mockery/mockery": "^0.9.9",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "YandexCheckout\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "time": "2018-12-08T15:50:30+00:00"
         }
     ],
     "packages-dev": [

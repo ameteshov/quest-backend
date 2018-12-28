@@ -1,0 +1,55 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "name": "light",
+            "description": [
+                "line 1",
+                "line 2"
+            ],
+            "price": "200.00",
+            "points": 100,
+            "is_active": 1
+        },
+        {
+            "name": "half-light",
+            "description": [
+                "line 1",
+                "line 2"
+            ],
+            "price": "300.00",
+            "points": 200,
+            "is_active": 0
+        },
+        {
+            "name": "medium",
+            "description": [
+                "line 1",
+                "line 2"
+            ],
+            "price": "100.00",
+            "points": 400,
+            "is_active": 1
+        },
+        {
+            "name": "premium",
+            "description": [
+                "line 1",
+                "line 2"
+            ],
+            "price": "100.00",
+            "points": 500,
+            "is_active": 1
+        }
+    ],
+    "first_page_url": "http:\/\/localhost\/plans?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/localhost\/plans?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/localhost\/plans",
+    "per_page": 15,
+    "prev_page_url": null,
+    "to": 4,
+    "total": 4
+}

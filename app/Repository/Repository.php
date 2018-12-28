@@ -61,6 +61,21 @@ class Repository implements ModelRepositoryInterface
             ->update($data);
     }
 
+    public function delete($id): void
+    {
+        if (is_array($id)) {
+            $this->getQuery()
+                ->where($id)
+                ->delete();
+
+            return;
+        }
+
+        $this->getQuery()
+            ->where(['id' => $id])
+            ->delete();
+    }
+
     public function exists(array $data): bool
     {
         return $this->getQuery()->where($data)->exists();

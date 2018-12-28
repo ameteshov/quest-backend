@@ -1,0 +1,11 @@
+{
+    "name": "some plan",
+    "points": 100,
+    "price": "15",
+    "is_active": 1,
+    "description": [
+        "text line 1",
+        "text line 2",
+        "text line 3"
+    ]
+}

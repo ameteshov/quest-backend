@@ -12,12 +12,12 @@ INSERT INTO questionnaires(id, name, content, created_at, updated_at)
 (2, 'Communication test', '[{"title":"Question 1"},{"title":"Question 2"}]', '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
 (3, 'IQ test', '[{"title":"Question 1"},{"title":"Question 2"}]', '2018-12-01 16:00:00', '2018-12-01 16:00:00');
 
-INSERT INTO plans(id, name, price, points, created_at, updated_at)
+INSERT INTO plans(id, name, price, points, description, is_active, created_at, updated_at)
     VALUES
-(1, 'light', 200, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(2, 'half-light', 300, 200, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(3, 'medium', 100, 400, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(4, 'premium', 100, 500, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
+(1, 'light', 200, 100, '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(2, 'half-light', 300, 200, '["line 1", "line 2"]', false, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(3, 'medium', 100, 400, '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(4, 'premium', 100, 500, '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
 
 INSERT INTO questionnaires_results(id, content, email, recipient_name, access_hash, is_passed, questionnaire_id, user_id)
     VALUES

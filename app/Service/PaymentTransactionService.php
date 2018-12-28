@@ -15,10 +15,10 @@ class PaymentTransactionService extends Service
 {
     protected $planRepository;
 
-    public function __construct(PaymentTransactionRepository $repository, PlanRepository $planRepository)
+    public function __construct()
     {
-        $this->repository = $repository;
-        $this->planRepository = $planRepository;
+        $this->repository = app(PaymentTransactionRepository::class);
+        $this->planRepository = app(PlanRepository::class);
     }
 
     public function begin(int $userId, int $planId): array

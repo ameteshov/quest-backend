@@ -6,7 +6,6 @@ use App\Jobs\SendFormEmailJob;
 use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionnaireResultRepository;
 use App\Repository\UserRepository;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @property QuestionnaireRepository $repository

@@ -10,4 +10,11 @@ class PlanRepository extends Repository
     {
         $this->setModel(Plan::class);
     }
+
+    public function search(array $filters)
+    {
+        return $this->getSearchQuery($filters)
+            ->filterBy('is_active')
+            ->getResult();
+    }
 }

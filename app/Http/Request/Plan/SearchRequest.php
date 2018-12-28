@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\Payment;
+namespace App\Request\Plan;
 
 use App\Model\Role;
 use App\Request\Request;
@@ -9,13 +9,15 @@ class SearchRequest extends Request
 {
     public function authorize()
     {
-        return $this->user()->role_id === Role::ROLE_ADMIN;
+        return true;
     }
 
     public function rules()
     {
         return [
-            'page' => 'integer'
+            'page' => 'integer',
+            'all' => 'boolean',
+            'is_active' => 'boolean'
         ];
     }
 }

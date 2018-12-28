@@ -16,8 +16,10 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->text('description');
             $table->decimal('price');
             $table->integer('points');
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

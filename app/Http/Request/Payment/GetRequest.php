@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\User;
+namespace App\Request\Payment;
 
 use App\Request\Request;
 

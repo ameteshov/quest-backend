@@ -25,7 +25,7 @@ class QuestionnaireController extends Controller
 
     public function get(GetRequest $request, QuestionnaireService $service, $id)
     {
-        $entity = $service->get($id);
+        $entity = $service->find($id, $request->input('with', []));
 
         return response()->json($entity);
     }

@@ -16,6 +16,9 @@ class CreateQuestionnairesTable extends Migration
         Schema::create('questionnaires', function (Blueprint $table) {
             $table->increments('id');
             $table->text('name');
+            $table->text('description');
+            $table->integer('success_score')->nullable();
+            $table->string('type', 10)->nullable();
             $table->text('content');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

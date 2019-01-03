@@ -37,14 +37,14 @@ class Repository implements ModelRepositoryInterface
     {
         $entity = new $this->model;
 
-        return $this->persist($entity, $entityData);
+        return $this->persist($entity, $entityData, true);
     }
 
-    public function update(int $id, array $data): array
+    public function update(int $id, array $data, $force = false): array
     {
         $entity = $this->first(['id' => $id]);
 
-        return $this->persist($entity, $data);
+        return $this->persist($entity, $data, $force);
     }
 
     public function updateBy(array $where, array $data): array
@@ -102,9 +102,14 @@ class Repository implements ModelRepositoryInterface
         return $query->first();
     }
 
-    protected function persist($entity, $data, $hydrationArray = true)
+    protected function persist($entity, $data, $force = false, $hydrationArray = true)
     {
-        $entity->fill($data);
+        if ($force) {
+            $entity->forceFill($data);
+        } else {
+            $entity->fill($data);
+        }
+
         $entity->save();
 
         if ($hydrationArray) {

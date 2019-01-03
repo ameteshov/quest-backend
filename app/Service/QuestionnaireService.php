@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Jobs\SendFormEmailJob;
+use App\Model\Role;
 use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionnaireResultRepository;
 use App\Repository\UserRepository;
@@ -46,6 +47,17 @@ class QuestionnaireService extends Service
         return $this->repository->search($filters);
     }
 
+    public function existsAndAvailable(int $id, int $roleId)
+    {
+        $where = ['id' => $id];
+
+        if (Role::ROLE_USER === $roleId) {
+            $where['is_active'] = 1;
+        }
+
+        return $this->repository->exists($where);
+    }
+
     protected function sendToRecipient($id, $senderId, array $recipientData)
     {
         $accessHash = md5(uniqid('', true));
@@ -56,6 +68,8 @@ class QuestionnaireService extends Service
             'recipient_name' => $recipientData['name'],
             'access_hash' => $accessHash
         ]);
+
+        $this->userRepository->decrementAvailableSurveys($senderId);
 
         dispatch(
             new SendFormEmailJob($recipientData['email'], [

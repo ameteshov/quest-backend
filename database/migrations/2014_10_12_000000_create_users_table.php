@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('reset_token')->nullable();
             $table->integer('role_id');
-            $table->integer('plan_id')->nullable();
+            $table->integer('questionnaires_count')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -14,9 +14,9 @@ class UserRepository extends Repository
 
     public function getLimit(int $userId)
     {
-        $user = $this->find($userId, ['plan']);
+        $user = $this->find($userId);
 
-        return (int)array_get($user, 'plan.points', config('defaults.free_plan.points'));
+        return (int)array_get($user, 'questionnaires_count');
     }
 
     public function search(?array $filters = [])
@@ -25,6 +25,13 @@ class UserRepository extends Repository
             ->filterByCurrentUser()
             ->with()
             ->getResult();
+    }
+
+    public function decrementAvailableSurveys(int $userId)
+    {
+        $this->getQuery()
+            ->where('id', $userId)
+            ->decrement('questionnaires_count');
     }
 
     protected function filterByCurrentUser(): ModelRepositoryInterface

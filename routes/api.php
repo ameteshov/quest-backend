@@ -27,6 +27,8 @@ Route::middleware($guestGroup)->group(function () {
 
     Route::get('forms/{hash}', QuestionnaireController::class.'@getByHash');
     Route::post('forms', QuestionnaireController::class.'@submit');
+
+    Route::post('payments/webhooks', PaymentController::class.'@handle');
 });
 
 Route::get('/auth/refresh', function() {

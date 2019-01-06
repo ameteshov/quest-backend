@@ -2,6 +2,7 @@
     "current_page": 1,
     "data": [
         {
+            "id": 1,
             "name": "light",
             "description": [
                 "line 1",
@@ -12,6 +13,7 @@
             "is_active": 1
         },
         {
+            "id": 3,
             "name": "medium",
             "description": [
                 "line 1",
@@ -22,6 +24,7 @@
             "is_active": 1
         },
         {
+            "id": 4,
             "name": "premium",
             "description": [
                 "line 1",

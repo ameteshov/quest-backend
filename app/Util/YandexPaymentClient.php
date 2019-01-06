@@ -3,15 +3,27 @@
 namespace App\Util;
 
 use App\Support\Interfaces\PaymentClientInterface;
+use Carbon\Carbon;
 use YandexCheckout\Client;
+use YandexCheckout\Model\PaymentInterface;
+use YandexCheckout\Request\Payments\CreatePaymentResponse;
 
+/**
+ * @property Client $apiClient
+ * @package App\Util
+ */
 class YandexPaymentClient implements PaymentClientInterface
 {
+    public const PAYMENT_STATUS_SUCCESS = 'succeeded';
+    public const PAYMENT_STATUS_PENDING = 'pending';
+    public const PAYMENT_STATUS_WAITING_CAPTURE = 'waiting_for_capture';
+    public const PAYMENT_STATUS_CANCEL = 'canceled';
+
     protected $apiClient;
 
     public function __construct()
     {
-        $this->apiClient = new Client();
+        $this->apiClient = app(Client::class);
 
         $config = config('defaults.checkout');
 
@@ -33,9 +45,11 @@ class YandexPaymentClient implements PaymentClientInterface
         // TODO: Implement refund() method.
     }
 
-    public function get(): array
+    public function get(string $uuid): array
     {
-        // TODO: Implement get() method.
+        $payment = $this->apiClient->getPaymentInfo($uuid);
+
+        return $this->transformPaymentObject($payment);
     }
 
     protected function buildCreateRequestData(array $paymentData): array
@@ -47,26 +61,31 @@ class YandexPaymentClient implements PaymentClientInterface
             ],
             'confirmation' => [
                 'type' => 'redirect',
-                'return_url' => config('defaults.checkout.return_url'),
-                'locale' => array_get($paymentData, 'locale', config('defaults.checkout.default_locale'))
+                'return_url' => config('defaults.checkout.return_url')
             ],
-            'description' => array_get($paymentData, 'description')
+            'description' => array_get($paymentData, 'description'),
+            'capture' => true
         ];
     }
 
-    protected function transformApiResponse(array $response): array
+    protected function transformApiResponse(CreatePaymentResponse $response): array
     {
         return [
-            'url' => array_get($response, 'confirmation.confirmation_url'),
-            'entity' => [
-                'payment_id' => '',
-                'status' => '',
-                'is_paid' => '',
-                'amount' => '',
-                'currency' => '',
-                'started_at' => '',
-                'description' => ''
-            ],
+            'url' => $response->getConfirmation()->getConfirmationUrl(),
+            'entity' => $this->transformPaymentObject($response),
+        ];
+    }
+
+    protected function transformPaymentObject(PaymentInterface $payment): array
+    {
+        return [
+            'payment_id' => $payment->getId(),
+            'status' => $payment->getStatus(),
+            'is_paid' => $payment->getPaid(),
+            'amount' => $payment->getAmount()->getValue(),
+            'currency' => $payment->getAmount()->getCurrency(),
+            'started_at' => $payment->getCreatedAt()->format('Y-m-d H:i:s'),
+            'description' => $payment->getDescription()
         ];
     }
 }

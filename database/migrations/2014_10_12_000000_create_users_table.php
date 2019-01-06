@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('reset_token')->nullable();
             $table->integer('role_id');
             $table->integer('questionnaires_count')->nullable();
+            $table->integer('points')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $hidden = ['password'];
 
-    protected $guarded = ['questionnaires_count', 'is_active', 'reset_token', 'role_id'];
+    protected $guarded = ['questionnaires_count', 'is_active', 'reset_token', 'role_id', 'points'];
 
     public function role()
     {

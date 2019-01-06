@@ -25,3 +25,11 @@ INSERT INTO questionnaires_results(id, content, email, recipient_name, score, ac
 (1, '[]', 'some.email@recipient.no', 'first', 10, 'qwerty', true, 1, 2),
 (2, '[]', 'some.email@recipient.no', 'second', 9, 'qwertyqwe', true, 1, 3),
 (3, '[]', 'some.email@recipient.no', 'third', null, 'qwertyreqre', false, 1, 3);
+
+INSERT INTO payments(id, user_id, payment_id, plan_id, is_paid, status, amount, currency, description, started_at, created_at, updated_at)
+    VALUES
+(1, 4, '22d6d597-000f-5000-9000-145f6df21d88', 1, false, 'pending', 200.00, 'RUB', 'payment desc', '2018-07-10 14:27:54', '2018-07-10 14:27:54', '2018-07-10 14:27:54');
+
+INSERT INTO payment_transactions(id, user_id, plan_id, token, created_at, updated_at)
+    VALUES
+(1, 3, 1, '22d6d597-000f-5000-9000-145f6df21d6f', '2019-01-02 12:00:00', '2019-01-02 12:00:00');

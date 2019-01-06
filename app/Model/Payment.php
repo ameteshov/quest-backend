@@ -5,7 +5,8 @@ namespace App\Model;
 class Payment extends Model
 {
     protected $fillable = [
-        'user_id', 'token', 'status',
+        'user_id', 'plan_id', 'payment_id', 'status', 'is_paid',
+        'amount', 'currency', 'description', 'started_at'
     ];
 
     public function user()

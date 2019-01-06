@@ -15,5 +15,5 @@ interface PaymentClientInterface
 
     public function refund(): array;
 
-    public function get(): array;
+    public function get(string $uuid): array;
 }

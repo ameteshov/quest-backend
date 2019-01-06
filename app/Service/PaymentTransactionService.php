@@ -49,4 +49,9 @@ class PaymentTransactionService extends Service
             'idempotent_key' => array_get($transaction, 'token')
         ];
     }
+
+    public function finish(int $userId): void
+    {
+        $this->repository->delete(['user_id' => $userId]);
+    }
 }

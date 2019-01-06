@@ -28,6 +28,7 @@ class UserService extends Service
         $userData['password'] = $this->hasher->make($userData['password']);
         $userData['role_id'] = Role::DEFAULT_ROLE;
         $userData['questionnaires_count'] = config('defaults.free_plan.points');
+        $userData['points'] = config('defaults.free_plan.points');
 
         $user = $this->repository->create($userData);
 
@@ -40,6 +41,8 @@ class UserService extends Service
     {
         $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
         $userData['reset_token'] = uniqid('', true);
+        $userData['questionnaires_count'] = config('defaults.free_plan.points');
+        $userData['points'] = config('defaults.free_plan.points');
 
         $user = $this->repository->create($userData);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Request\Payment\CreateRequest;
 use App\Request\Payment\HandleRequest;
+use App\Request\Payment\SearchRequest;
 use App\Service\PaymentService;
 
 class PaymentController extends Controller
@@ -15,19 +16,11 @@ class PaymentController extends Controller
         return response()->json($result);
     }
 
-    public function get()
+    public function search(SearchRequest $request, PaymentService $service)
     {
+        $result = $service->search($request->all());
 
-    }
-
-    public function update()
-    {
-
-    }
-
-    public function delete()
-    {
-
+        return response()->json($result);
     }
 
     public function handle(HandleRequest $request, PaymentService $service)

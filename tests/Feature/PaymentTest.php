@@ -126,4 +126,26 @@ class PaymentTest extends TestCase
         ]);
         $this->assertDatabaseMissing('payment_transactions', ['user_id' => $this->userPaid->id]);
     }
+
+    public function testSearch()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/payments', []);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertExactJson($this->getJsonFixture('search.json'));
+    }
+
+    public function testSearchNoAuth()
+    {
+        $response = $this->json('get', '/payments', []);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testSearchNoPermission()
+    {
+        $response = $this->actingAs($this->user)->json('get', '/payments', []);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
 }

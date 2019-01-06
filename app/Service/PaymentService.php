@@ -68,6 +68,12 @@ class PaymentService extends Service
         }
     }
 
+    public function search(?array $filters = []): array
+    {
+        $filters['with'] = ['user', 'plan'];
+        return $this->repository->search($filters);
+    }
+
     protected function finishPayment(array $payment): void
     {
         $closedPayment = $this->closePayment($payment);

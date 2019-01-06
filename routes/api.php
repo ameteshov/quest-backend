@@ -57,4 +57,5 @@ Route::middleware($authGroup)->group(function () {
     Route::put('plans/{id}', PlanController::class.'@update');
 
     Route::post('payments', PaymentController::class.'@create');
+    Route::get('payments', PaymentController::class.'@search');
 });

@@ -10,4 +10,11 @@ class PaymentRepository extends Repository
     {
         $this->setModel(Payment::class);
     }
+
+    public function search(?array $filters = []): array
+    {
+        return $this->getSearchQuery($filters)
+            ->with()
+            ->getResult();
+    }
 }

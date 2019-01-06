@@ -64,7 +64,8 @@ class QuestionnaireTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('put', '/questionnaires/1', [
             'name' => 'new name',
-            'content' => ['test' => 1]
+            'content' => ['test' => 1],
+            'is_active' => 0
         ]);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
@@ -72,7 +73,8 @@ class QuestionnaireTest extends TestCase
         $this->assertDatabaseHas('questionnaires', [
             'id' => 1,
             'name' => 'new name',
-            'content' => json_encode(['test' => 1])
+            'content' => json_encode(['test' => 1]),
+            'is_active' => 0
         ]);
     }
 

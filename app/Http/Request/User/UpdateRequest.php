@@ -12,14 +12,16 @@ class UpdateRequest extends Request
     public function authorize()
     {
         return $this->user()->role_id === Role::ROLE_ADMIN ||
-            $this->route('id') === $this->user()->id;
+            (int)$this->route('id') === $this->user()->id;
     }
 
     public function rules()
     {
         return [
             'name' => 'string',
-            'email' => 'string|email|unique:users,email,' . $this->route('id')
+            'email' => 'string|email|unique:users,email,' . $this->route('id'),
+            'questionnaires_count' => 'integer',
+            'is_active' => 'boolean'
         ];
     }
 

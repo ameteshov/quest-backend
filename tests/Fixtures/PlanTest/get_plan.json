@@ -1,0 +1,11 @@
+{
+    "id": 1,
+    "name": "light",
+    "description": [
+        "line 1",
+        "line 2"
+    ],
+    "price": "200.00",
+    "points": 100,
+    "is_active": 1
+}

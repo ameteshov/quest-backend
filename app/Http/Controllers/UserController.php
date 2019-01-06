@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request, UserService $service, int $id): JsonResponse
     {
-        $service->update($id, $request->all());
+        $service->update($id, $request->all(), $request->user()->role_id);
 
         return response()->json('', Response::HTTP_NO_CONTENT);
     }

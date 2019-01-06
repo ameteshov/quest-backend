@@ -26,11 +26,9 @@ class QuestionnaireTest extends TestCase
         $response = $this->actingAs($this->admin)->json('post', '/questionnaires', $data);
 
         $response->assertStatus(Response::HTTP_OK);
+        $data['content'] = json_encode($data['content']);
 
-        $this->assertDatabaseHas('questionnaires', [
-            'name' => $data['name'],
-            'content' => json_encode($data['content'])
-        ]);
+        $this->assertDatabaseHas('questionnaires', $data);
     }
 
     public function testCreateNoPermission()
@@ -108,6 +106,36 @@ class QuestionnaireTest extends TestCase
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testGet()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/questionnaires/1');
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $response->assertExactJson($this->getJsonFixture('survey.json'));
+    }
+
+    public function testGetNotExists()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/questionnaires/0');
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testGetNotAvailableAsUser()
+    {
+        $response = $this->actingAs($this->user)->json('get', '/questionnaires/2');
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testGetNoAuth()
+    {
+        $response = $this->json('get', '/questionnaires/2');
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     /**

@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\{
-    AuthController, QuestionnaireController, UserController
+    AuthController, QuestionnaireController, UserController, PaymentController,
+    PlanController
 };
 
 /*
@@ -26,6 +27,8 @@ Route::middleware($guestGroup)->group(function () {
 
     Route::get('forms/{hash}', QuestionnaireController::class.'@getByHash');
     Route::post('forms', QuestionnaireController::class.'@submit');
+
+    Route::post('payments/webhooks', PaymentController::class.'@handle');
 });
 
 Route::get('/auth/refresh', function() {
@@ -46,4 +49,12 @@ Route::middleware($authGroup)->group(function () {
     Route::get('users/{id}', UserController::class.'@get');
     Route::delete('users/{id}', UserController::class.'@delete');
     Route::put('users/{id}', UserController::class.'@update');
+
+    Route::post('plans', PlanController::class.'@create');
+    Route::get('plans', PlanController::class.'@search');
+    Route::get('plans/{id}', PlanController::class.'@get');
+    Route::delete('plans/{id}', PlanController::class.'@delete');
+    Route::put('plans/{id}', PlanController::class.'@update');
+
+    Route::post('payments', PaymentController::class.'@create');
 });

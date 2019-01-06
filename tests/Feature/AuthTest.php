@@ -101,9 +101,8 @@ class AuthTest extends TestCase
 
         $response = $this->json('post', '/auth/register', $requestData);
 
-        $this->assertDatabaseHas('users', array_except($requestData, ['password', 'confirm']));
-
         $response->assertStatus(Response::HTTP_OK);
+        $this->assertDatabaseHas('users', array_except($requestData, ['password', 'confirm']));
     }
 
     public function testRegisterEmailExists()

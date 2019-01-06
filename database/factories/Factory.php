@@ -17,8 +17,20 @@ $factory->define(App\Model\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => str_random(10),
+        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'
+    ];
+});
+
+$factory->define(App\Model\Questionnaire::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'content' => json_encode([
+            'questions' => [$faker->sentence],
+            'answers' => [$faker->sentence]
+        ]),
+        'description' => $faker->text(),
+        'is_active' => true,
+        'success_score' => $faker->numberBetween(5, 200),
+        'type' => \App\Model\Questionnaire::SUM_TYPE
     ];
 });

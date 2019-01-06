@@ -10,10 +10,12 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'reset_token', 'role_id', 'plan_id', 'is_active'
+        'name', 'email', 'password'
     ];
 
     protected $hidden = ['password'];
+
+    protected $guarded = ['questionnaires_count', 'is_active', 'reset_token', 'role_id', 'points'];
 
     public function role()
     {

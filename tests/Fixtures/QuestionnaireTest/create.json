@@ -11,5 +11,8 @@
             "from": 1,
             "to": 8
         }
-    ]
+    ],
+    "type": "avg",
+    "success_score": 6,
+    "description": "some text"
 }

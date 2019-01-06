@@ -26,7 +26,8 @@ class UserService extends Service
     public function create(array $userData): array
     {
         $userData['password'] = $this->hasher->make($userData['password']);
-        $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
+        $userData['role_id'] = Role::DEFAULT_ROLE;
+        $userData['questionnaires_count'] = config('defaults.free_plan.points');
 
         $user = $this->repository->create($userData);
 
@@ -45,6 +46,13 @@ class UserService extends Service
         dispatch(new SendResetPasswordEmailJob($user['email'], ['data' => $user]));
 
         return $user;
+    }
+
+    public function update(int $id, array $data, int $role): void
+    {
+        $useForce = $role === Role::ROLE_ADMIN;
+
+        $this->repository->update($id, $data, $useForce);
     }
 
     public function resetPassword(string $email): void

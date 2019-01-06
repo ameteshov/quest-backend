@@ -1,0 +1,9 @@
+{
+    "payment_id": "22d6d597-000f-5000-9000-145f6df21d88",
+    "status": "succeeded",
+    "is_paid": true,
+    "amount": "200.00",
+    "currency": "RUB",
+    "started_at": "2018-07-10 14:25:27",
+    "description": "Заказ №1"
+}

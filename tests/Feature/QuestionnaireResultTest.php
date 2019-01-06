@@ -118,13 +118,6 @@ class QuestionnaireResultTest extends TestCase
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-//    public function testSubmit()
-//    {
-//        $request = $this->json('post', "/form/{$this->form->access_hash}", [
-//            ''
-//        ]);
-//    }
-
     public function getInvalidData()
     {
         return [

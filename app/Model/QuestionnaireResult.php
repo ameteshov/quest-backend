@@ -9,8 +9,10 @@ class QuestionnaireResult extends Model
     protected $fillable = [
         'content', 'email', 'recipient_name',
         'access_hash', 'is_passed', 'questionnaire_id',
-        'user_id'
+        'user_id', 'score'
     ];
+
+    protected $casts = ['content' => 'array'];
 
     public function user()
     {

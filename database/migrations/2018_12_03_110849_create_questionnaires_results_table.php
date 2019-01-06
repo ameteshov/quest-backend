@@ -21,6 +21,7 @@ class CreateQuestionnairesResultsTable extends Migration
             $table->string('access_hash', 100);
             $table->boolean('is_passed')->default(false);
             $table->integer('questionnaire_id');
+            $table->integer('score')->nullable();
             $table->integer('user_id');
             $table->timestamps();
         });

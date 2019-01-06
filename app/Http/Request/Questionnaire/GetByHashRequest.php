@@ -25,7 +25,7 @@ class GetByHashRequest extends Request
         $service = app(QuestionnaireService::class);
 
         if (null === $service->findByHash($this->route('hash'))) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Survey not exists or not available anymore');
         }
     }
 }

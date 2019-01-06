@@ -73,7 +73,7 @@ class PaymentTest extends TestCase
 
     public function testHandlePayment()
     {
-        $serviceResponse = $this->getJsonFixture('client_get_payment_info_response.json');
+        $serviceResponse = $this->getJsonFixture('client_get_payment_info_response_success.json');
 
         $this->mock(Client::class, function ($item) use ($serviceResponse) {
             $item->shouldReceive('getPaymentInfo')
@@ -82,19 +82,47 @@ class PaymentTest extends TestCase
                 ->andReturn($this);
         });
 
-        $notification = $this->getJsonFixture('payment_notification.json');
+        $notification = $this->getJsonFixture('payment_notification_success.json');
 
         $response = $this->json('post', 'payments/webhooks', $notification);
 
         $response->assertStatus(Response::HTTP_OK);
         $this->assertDatabaseHas('users', [
             'id' => $this->userPaid->id,
-            'points' => 100
+            'points' => 200
         ]);
         $this->assertDatabaseHas('payments', [
             'payment_id' => $notification['object']['id'],
             'status' => YandexPaymentClient::PAYMENT_STATUS_SUCCESS,
             'is_paid' => 1
+        ]);
+        $this->assertDatabaseMissing('payment_transactions', ['user_id' => $this->userPaid->id]);
+    }
+
+    public function testHandlePaymentCancelled()
+    {
+        $serviceResponse = $this->getJsonFixture('client_get_payment_info_response_cancelled.json');
+
+        $this->mock(Client::class, function ($item) use ($serviceResponse) {
+            $item->shouldReceive('getPaymentInfo')
+                ->andReturn(new PaymentResponse($serviceResponse))
+                ->shouldReceive('setAuth')
+                ->andReturn($this);
+        });
+
+        $notification = $this->getJsonFixture('payment_notification_cancelled.json');
+
+        $response = $this->json('post', 'payments/webhooks', $notification);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $this->assertDatabaseHas('users', [
+            'id' => $this->userPaid->id,
+            'points' => $this->userPaid->points
+        ]);
+        $this->assertDatabaseHas('payments', [
+            'payment_id' => $notification['object']['id'],
+            'status' => YandexPaymentClient::PAYMENT_STATUS_CANCEL,
+            'is_paid' => 0
         ]);
         $this->assertDatabaseMissing('payment_transactions', ['user_id' => $this->userPaid->id]);
     }

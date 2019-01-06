@@ -59,6 +59,10 @@ class PaymentService extends Service
             if ($payment['status'] === YandexPaymentClient::PAYMENT_STATUS_SUCCESS) {
                 $this->finishPayment($payment);
             }
+
+            if ($payment['status'] === YandexPaymentClient::PAYMENT_STATUS_CANCEL) {
+                $this->closePayment($payment);
+            }
         } catch (\Exception $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
@@ -66,17 +70,31 @@ class PaymentService extends Service
 
     protected function finishPayment(array $payment): void
     {
+        $closedPayment = $this->closePayment($payment);
+
+        $this->updateUserPlan($closedPayment['user_id'], $closedPayment['plan_id']);
+    }
+
+    protected function closePayment(array $payment): array
+    {
         $where = ['payment_id' => $payment['payment_id']];
 
         $updated = $this->repository->updateBy($where, $payment);
 
-        $this->updateUserPlan($updated['user_id'], $updated['plan_id']);
         $this->paymentTransactionService->finish($updated['user_id']);
+
+        return $updated;
     }
 
     protected function updateUserPlan(int $userId, int $planId): void
     {
         $plan = $this->planRepository->find($planId);
-        $this->userRepository->update($userId, ['points' => $plan['points']], true);
+        $user = $this->userRepository->find($userId);
+
+        $data = [
+            'points' => (int)$plan['points'] + (int)$user['points']
+        ];
+
+        $this->userRepository->update($userId, $data, true);
     }
 }

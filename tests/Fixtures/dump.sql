@@ -1,10 +1,10 @@
-INSERT INTO users(id, name, email, questionnaires_count, password, reset_token, role_id, created_at, updated_at)
+INSERT INTO users(id, name, email, questionnaires_count, points, password, reset_token, role_id, created_at, updated_at)
     VALUES
-(1, 'Diego Alvarez', 'admin@example.net', null, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(2, 'Ivan Dubinov', 'ivan.dubinov@example.net', 0, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(3, 'Peter Griffin', 'peter.griffin@example.net', 10, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
-(4, 'Megan Griffin', 'megan.griffin@example.net', 20, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
-(5, 'Louise Griffin', 'louise.griffin@example.net', 11, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00');
+(1, 'Diego Alvarez', 'admin@example.net', null, null, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(2, 'Ivan Dubinov', 'ivan.dubinov@example.net', 0, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(3, 'Peter Griffin', 'peter.griffin@example.net', 10, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
+(4, 'Megan Griffin', 'megan.griffin@example.net', 20, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
+(5, 'Louise Griffin', 'louise.griffin@example.net', 11, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00');
 
 INSERT INTO questionnaires(id, name, description, success_score, type, content, is_active, created_at, updated_at)
     VALUES

@@ -25,6 +25,13 @@ class PaymentTransactionService extends Service
     {
         $transaction = $this->repository->findBy(['user_id' => $userId], ['plan']);
 
+        if (
+            array_has($transaction, 'plan.id') &&
+            array_get($transaction, 'plan.id') !== $planId
+        ) {
+            throw new UnableTransactionCreationException('Unable start new transaction when old not processed');
+        }
+
         if ([] === $transaction) {
             $plan = $this->planRepository->find($planId);
 
@@ -40,19 +47,10 @@ class PaymentTransactionService extends Service
             ];
         }
 
-        if (array_get($transaction, 'plan.id') !== $planId) {
-            throw new UnableTransactionCreationException('Unable start new transaction when old not processed');
-        }
-
         return [
             'amount' => array_get($transaction, 'plan.price'),
             'idempotent_key' => array_get($transaction, 'token')
         ];
-    }
-
-    public function rollback(string $token): void
-    {
-        $this->repository->delete(['token' => $token]);
     }
 
     public function finish(int $userId): void

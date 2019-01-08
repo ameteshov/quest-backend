@@ -35,9 +35,8 @@ class QuestionnaireService extends Service
     public function isLimitExceeded(int $userId, ?int $sendCount = 0)
     {
         $limit = $this->userRepository->getLimit($userId);
-        $used = $this->resultsRepository->count(['user_id' => $userId]);
 
-        return ($used + $sendCount) > $limit;
+        return $sendCount > $limit;
     }
 
     public function search(?array $filters = [])
@@ -73,7 +72,8 @@ class QuestionnaireService extends Service
 
         dispatch(
             new SendFormEmailJob($recipientData['email'], [
-                'name' => $recipientData['name']
+                'name' => $recipientData['name'],
+                'hash' => $accessHash
             ])
         );
     }

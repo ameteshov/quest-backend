@@ -50,6 +50,11 @@ class PaymentTransactionService extends Service
         ];
     }
 
+    public function rollback(string $token): void
+    {
+        $this->repository->delete(['token' => $token]);
+    }
+
     public function finish(int $userId): void
     {
         $this->repository->delete(['user_id' => $userId]);

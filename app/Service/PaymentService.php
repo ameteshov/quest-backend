@@ -36,9 +36,9 @@ class PaymentService extends Service
 
     public function create(int $userId, int $planId)
     {
-        try {
-            $paymentData = $this->paymentTransactionService->begin($userId, $planId);
+        $paymentData = $this->paymentTransactionService->begin($userId, $planId);
 
+        try {
             $payment = $this->paymentClient->create($paymentData);
 
             $this->repository->create(
@@ -47,6 +47,8 @@ class PaymentService extends Service
 
             return array_only($payment, 'url');
         } catch (\Exception $e) {
+            $this->paymentTransactionService->rollback($paymentData['idempotent_key']);
+
             throw new BadRequestHttpException($e->getMessage());
         }
     }

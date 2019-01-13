@@ -97,7 +97,8 @@ class PaymentService extends Service
         $user = $this->userRepository->find($userId);
 
         $data = [
-            'points' => (int)$plan['points'] + (int)$user['points']
+            'points' => (int)$plan['points'] + (int)$user['points'],
+            'questionnaires_count' => (int)$plan['points'] + (int)$user['questionnaires_count']
         ];
 
         $this->userRepository->update($userId, $data, true);

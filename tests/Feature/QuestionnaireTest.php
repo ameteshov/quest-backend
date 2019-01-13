@@ -117,6 +117,24 @@ class QuestionnaireTest extends TestCase
         $response->assertExactJson($this->getJsonFixture('survey.json'));
     }
 
+    public function testGetWithResultsAsUser()
+    {
+        $response = $this->actingAs($this->user)->json('get', '/questionnaires/1', ['with' => ['results']]);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $response->assertExactJson($this->getJsonFixture('user_get_survey_with_results.json'));
+    }
+
+    public function testGetWithResultsAsAdmin()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/questionnaires/1', ['with' => ['results']]);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $response->assertExactJson($this->getJsonFixture('admin_get_survey_with_results.json'));
+    }
+
     public function testGetNotExists()
     {
         $response = $this->actingAs($this->admin)->json('get', '/questionnaires/0');

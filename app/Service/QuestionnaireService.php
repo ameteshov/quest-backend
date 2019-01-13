@@ -25,6 +25,18 @@ class QuestionnaireService extends Service
         $this->resultsRepository = app(QuestionnaireResultRepository::class);
     }
 
+    public function find(int $id, array $user, ?array $with = [])
+    {
+        if (Role::ROLE_USER === $user['role_id']) {
+            $with =
+                in_array('results', $with, true) ?
+                $this->getFilteredResultRelation($user['id'], $with) :
+                $with;
+        }
+
+        return $this->repository->find($id, $with);
+    }
+
     public function send(int $id, int $senderId, array $sendList)
     {
         foreach ($sendList as $item) {
@@ -76,5 +88,14 @@ class QuestionnaireService extends Service
                 'hash' => $accessHash
             ])
         );
+    }
+
+    protected function getFilteredResultRelation(int $userId, array $with)
+    {
+        $with['results'] = function($query) use ($userId) {
+                $query->where('user_id', $userId);
+        };
+
+        return $with;
     }
 }

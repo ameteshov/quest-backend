@@ -21,6 +21,7 @@
             "content": [],
             "email": "some.email@recipient.no",
             "recipient_name": "first",
+            "recipient_phone": null,
             "access_hash": "qwerty",
             "is_passed": 1,
             "questionnaire_id": 1,

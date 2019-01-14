@@ -18,7 +18,8 @@ class SubmitRequest extends Request
     {
         return [
             'hash' => 'required|string',
-            'content' => 'required|array'
+            'content' => 'required|array',
+            'phone' => 'required|string'
         ];
     }
 

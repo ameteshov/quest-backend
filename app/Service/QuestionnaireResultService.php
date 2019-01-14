@@ -26,6 +26,7 @@ class QuestionnaireResultService extends Service
 
         $data = [
             'content' => $data['content'],
+            'recipient_phone' => $data['phone'],
             'is_passed' => true,
             'score' => $this->getQuestionnaireScore($data)
         ];

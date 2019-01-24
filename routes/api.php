@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\{
     AuthController, QuestionnaireController, UserController, PaymentController,
-    PlanController
+    PlanController, EmployeeCharacteristicController
 };
 
 /*
@@ -55,6 +55,12 @@ Route::middleware($authGroup)->group(function () {
     Route::get('plans/{id}', PlanController::class.'@get');
     Route::delete('plans/{id}', PlanController::class.'@delete');
     Route::put('plans/{id}', PlanController::class.'@update');
+
+    Route::post('employee-characteristics', EmployeeCharacteristicController::class.'@create');
+    Route::get('employee-characteristics', EmployeeCharacteristicController::class.'@search');
+    Route::get('employee-characteristics/{id}', EmployeeCharacteristicController::class.'@get');
+    Route::delete('employee-characteristics/{id}', EmployeeCharacteristicController::class.'@delete');
+    Route::put('employee-characteristics/{id}', EmployeeCharacteristicController::class.'@update');
 
     Route::post('payments', PaymentController::class.'@create');
     Route::get('payments', PaymentController::class.'@search');

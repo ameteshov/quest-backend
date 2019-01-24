@@ -97,11 +97,13 @@ class QuestionnaireResultTest extends TestCase
 
     public function testGetByHash()
     {
-        $response = $this->json('get', "/forms/{$this->form->access_hash}");
+        $form = $this->loadTestFixture(QuestionnaireResult::class, 'available_form.json');
+
+        $response = $this->json('get', "/forms/{$form->access_hash}");
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $response->assertExactJson($this->getJsonFixture('form.json'));
+        $response->assertExactJson(json_encode($form));
     }
 
     public function testGetByHashFormSubmitted()

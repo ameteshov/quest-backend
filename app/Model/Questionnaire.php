@@ -8,7 +8,7 @@ class Questionnaire extends Model
     public const SUM_TYPE = 'sum';
 
     protected $fillable = [
-        'name', 'content', 'description', 'is_active', 'success_score', 'type'
+        'name', 'content', 'description', 'is_active', 'success_score', 'type', 'characteristic_id'
     ];
 
     protected $casts = [
@@ -18,5 +18,10 @@ class Questionnaire extends Model
     public function results()
     {
         return $this->hasMany(QuestionnaireResult::class, 'questionnaire_id', 'id');
+    }
+
+    public function characteristic()
+    {
+        return $this->belongsTo(EmployeeCharacteristic::class, 'characteristic_id', 'id');
     }
 }

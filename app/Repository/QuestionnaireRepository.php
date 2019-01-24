@@ -38,7 +38,8 @@ class QuestionnaireRepository extends Repository
     {
         return function ($query) use ($hash) {
             $query->where('is_passed', false)
-                ->where('access_hash', $hash);
+                ->where('access_hash', $hash)
+                ->whereRaw('DATE_ADD(expired_at, INTERVAL ? HOUR) > now()', [config('defaults.forms.ttl')]);
         };
     }
 }

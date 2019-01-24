@@ -67,4 +67,11 @@ class TestCase extends \Tests\TestCase
 
         return $this;
     }
+
+    public function loadTestFixture(string $entityClass, string $fixture)
+    {
+        $data = $this->getJsonFixture($fixture);
+
+        return factory($entityClass)->create($data);
+    }
 }

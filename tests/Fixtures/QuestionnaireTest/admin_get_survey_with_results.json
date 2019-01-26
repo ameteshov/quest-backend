@@ -30,7 +30,8 @@
             "created_at": null,
             "updated_at": null,
             "recipient_phone": null,
-            "expired_at": "2018-12-01 16:00:00"
+            "expired_at": "2018-12-01 16:00:00",
+            "birthday_date": null
         },
         {
             "id": 2,
@@ -45,7 +46,8 @@
             "created_at": null,
             "updated_at": null,
             "recipient_phone": null,
-            "expired_at": "2018-12-01 16:00:00"
+            "expired_at": "2018-12-01 16:00:00",
+            "birthday_date": null
         },
         {
             "id": 3,
@@ -60,7 +62,8 @@
             "created_at": null,
             "updated_at": null,
             "recipient_phone": null,
-            "expired_at": "2018-12-01 16:00:00"
+            "expired_at": "2018-12-01 16:00:00",
+            "birthday_date": null
         }
     ]
 }

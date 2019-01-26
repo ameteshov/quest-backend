@@ -103,7 +103,7 @@ class QuestionnaireResultTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $response->assertExactJson(json_encode($form));
+        $response->assertExactJson($this->getJsonFixture('form.json'));
     }
 
     public function testGetByHashFormSubmitted()

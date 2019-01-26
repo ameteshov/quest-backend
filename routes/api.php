@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\{
     AuthController, QuestionnaireController, UserController, PaymentController,
-    PlanController
+    PlanController, QuestionnaireTypeController
 };
 
 /*
@@ -38,23 +38,29 @@ Route::get('/auth/refresh', function() {
 Route::middleware($authGroup)->group(function () {
     Route::post('questionnaires', QuestionnaireController::class.'@create');
     Route::get('questionnaires', QuestionnaireController::class.'@search');
-    Route::get('questionnaires/{id}', QuestionnaireController::class.'@get');
-    Route::delete('questionnaires/{id}', QuestionnaireController::class.'@delete');
-    Route::put('questionnaires/{id}', QuestionnaireController::class.'@update');
+    Route::get('questionnaires/{id}', QuestionnaireController::class.'@get')->where('id', '[0-9]+');
+    Route::delete('questionnaires/{id}', QuestionnaireController::class.'@delete')->where('id', '[0-9]+');
+    Route::put('questionnaires/{id}', QuestionnaireController::class.'@update')->where('id', '[0-9]+');
 
-    Route::post('questionnaires/{id}/send', QuestionnaireController::class.'@send');
+    Route::post('questionnaires/{id}/send', QuestionnaireController::class.'@send')->where('id', '[0-9]+');
 
     Route::post('users', UserController::class.'@create');
     Route::get('users', UserController::class.'@search');
-    Route::get('users/{id}', UserController::class.'@get');
-    Route::delete('users/{id}', UserController::class.'@delete');
-    Route::put('users/{id}', UserController::class.'@update');
+    Route::get('users/{id}', UserController::class.'@get')->where('id', '[0-9]+');
+    Route::delete('users/{id}', UserController::class.'@delete')->where('id', '[0-9]+');
+    Route::put('users/{id}', UserController::class.'@update')->where('id', '[0-9]+');
 
     Route::post('plans', PlanController::class.'@create');
     Route::get('plans', PlanController::class.'@search');
-    Route::get('plans/{id}', PlanController::class.'@get');
-    Route::delete('plans/{id}', PlanController::class.'@delete');
-    Route::put('plans/{id}', PlanController::class.'@update');
+    Route::get('plans/{id}', PlanController::class.'@get')->where('id', '[0-9]+');
+    Route::delete('plans/{id}', PlanController::class.'@delete')->where('id', '[0-9]+');
+    Route::put('plans/{id}', PlanController::class.'@update')->where('id', '[0-9]+');
+
+    Route::post('questionnaires/types', QuestionnaireTypeController::class.'@create');
+    Route::get('questionnaires/types', QuestionnaireTypeController::class.'@search');
+    Route::get('questionnaires/types/{id}', QuestionnaireTypeController::class.'@get')->where('id', '[0-9]+');
+    Route::delete('questionnaires/types/{id}', QuestionnaireTypeController::class.'@delete')->where('id', '[0-9]+');
+    Route::put('questionnaires/types/{id}', QuestionnaireTypeController::class.'@update')->where('id', '[0-9]+');
 
     Route::post('payments', PaymentController::class.'@create');
     Route::get('payments', PaymentController::class.'@search');

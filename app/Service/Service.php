@@ -12,7 +12,7 @@ class Service
             return call_user_func_array([$this->repository, $name], $arguments);
         }
 
-        throw new \BadMethodCallException("Method {$name} not found in {$this->repository}");
+        throw new \BadMethodCallException("Method {$name} not found in " . get_class($this->repository));
     }
 
     protected function setRepository(string $repositoryClass): void

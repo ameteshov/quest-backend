@@ -34,3 +34,17 @@ $factory->define(App\Model\Questionnaire::class, function (Faker $faker) {
         'type' => \App\Model\Questionnaire::SUM_TYPE
     ];
 });
+
+$factory->define(App\Model\QuestionnaireResult::class, function (Faker $faker) {
+    return [
+        'content' => json_encode([]),
+        'email' => $faker->email,
+        'recipient_name' => $faker->name,
+        'recipient_phone' => $faker->phoneNumber,
+        'access_hash' => $faker->sha256,
+        'is_passed' => false,
+        'user_id' => 1,
+        'questionnaire_id' => 1,
+        'expired_at' => \Carbon\Carbon::now()->addHour(48)->toDateTimeString()
+    ];
+});

@@ -19,7 +19,8 @@ class CreateRequest extends Request
             'name' => 'required|string',
             'content' => 'required|array',
             'success_score' => 'required|integer',
-            'type' => 'required|string|in:' . implode(',', [Questionnaire::SUM_TYPE, Questionnaire::AVG_TYPE]),
+            'result_type' => 'required|string|in:' . implode(',', [Questionnaire::SUM_TYPE, Questionnaire::AVG_TYPE]),
+            'type_id' => 'integer|nullable|exists:questionnaire_types,id',
             'description' => 'required|string'
         ];
     }

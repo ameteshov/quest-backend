@@ -12,7 +12,8 @@
             "to": 8
         }
     ],
-    "type": "avg",
+    "result_type": "avg",
     "success_score": 6,
-    "description": "some text"
+    "description": "some text",
+    "type_id": null
 }

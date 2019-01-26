@@ -1,0 +1,35 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 2,
+            "name": "agility"
+        },
+        {
+            "id": 5,
+            "name": "experience"
+        },
+        {
+            "id": 1,
+            "name": "intellect"
+        },
+        {
+            "id": 3,
+            "name": "spirit"
+        },
+        {
+            "id": 4,
+            "name": "straight"
+        }
+    ],
+    "first_page_url": "http:\/\/localhost\/questionnaires\/types?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/localhost\/questionnaires\/types?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/localhost\/questionnaires\/types",
+    "per_page": 15,
+    "prev_page_url": null,
+    "to": 5,
+    "total": 5
+}

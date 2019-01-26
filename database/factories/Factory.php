@@ -31,7 +31,7 @@ $factory->define(App\Model\Questionnaire::class, function (Faker $faker) {
         'description' => $faker->text(),
         'is_active' => true,
         'success_score' => $faker->numberBetween(5, 200),
-        'type' => \App\Model\Questionnaire::SUM_TYPE
+        'result_type' => \App\Model\Questionnaire::SUM_TYPE
     ];
 });
 

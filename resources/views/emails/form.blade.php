@@ -6,8 +6,16 @@
 
     <div style="Margin-left: 20px;Margin-right: 20px;">
         <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-            <h1 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #565656;font-size: 30px;line-height: 38px;text-align: center;"><strong>Ваше резюме интересно работодателю!</strong></h1><p style="Margin-top: 20px;Margin-bottom: 0;">&nbsp;<br />
-                Здравствуйте, {{$name}}<p style="Margin-top: 20px;Margin-bottom: 20px;">Перед собеседованием вам необходимо пройти тестирование. Это займет не более 10 минут.</p>
+            <h1 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #565656;font-size: 30px;line-height: 38px;text-align: center;"><strong>@lang('form.subject')</strong></h1><p style="Margin-top: 20px;Margin-bottom: 0;">&nbsp;<br />
+                {{$name}}, добрый день!
+            <p style="Margin-top: 20px;Margin-bottom: 20px;">
+                Мы получили и уже передали руководителю вашу анкету на вакансию. Мы приглашаем вас пройти заключительный этап перед собеседованием.
+                Это будет тест, заполнение которого займет у вас от 20 до 40 минут и сэкономит нам с вами порядка часа на собеседовании.
+                Пройти данный тест вы можете как с компьютера, так и с мобильного устройства. В вашем распоряжении 24 часа с момента получения данного письма.
+                Тест содержит простые жизненные ситуации и ваше отношение к ним.
+                По каждому вопросу вы сможете выбрать один из трех вариантов ответа.
+                В тесте нет правильных или неправильных ответов, поэтому отвечайте на вопросы максимально честно и откровенно.
+            </p>
         </div>
     </div>
 

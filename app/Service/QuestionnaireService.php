@@ -7,6 +7,7 @@ use App\Model\Role;
 use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionnaireResultRepository;
 use App\Repository\UserRepository;
+use Carbon\Carbon;
 
 /**
  * @property QuestionnaireRepository $repository
@@ -77,7 +78,8 @@ class QuestionnaireService extends Service
             'user_id' => $senderId,
             'email' => $recipientData['email'],
             'recipient_name' => $recipientData['name'],
-            'access_hash' => $accessHash
+            'access_hash' => $accessHash,
+            'expired_at' => Carbon::now()->addHour(config('defaults.forms.ttl'))->toDateTimeString()
         ]);
 
         $this->userRepository->decrementAvailableSurveys($senderId);

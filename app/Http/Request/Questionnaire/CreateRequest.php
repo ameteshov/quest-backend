@@ -10,7 +10,7 @@ class CreateRequest extends Request
 {
     public function authorize()
     {
-        return $this->user()->role_id === Role::ROLE_ADMIN;
+        return true;
     }
 
     public function rules()
@@ -18,10 +18,10 @@ class CreateRequest extends Request
         return [
             'name' => 'required|string',
             'content' => 'required|array',
-            'success_score' => 'required|integer',
-            'result_type' => 'required|string|in:' . implode(',', [Questionnaire::SUM_TYPE, Questionnaire::AVG_TYPE]),
+            'success_score' => 'integer',
+            'result_type' => 'string|in:' . implode(',', [Questionnaire::SUM_TYPE, Questionnaire::AVG_TYPE]),
             'type_id' => 'integer|nullable|exists:questionnaire_types,id',
-            'description' => 'required|string'
+            'description' => 'string'
         ];
     }
 }

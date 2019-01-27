@@ -31,15 +31,6 @@ class QuestionnaireTest extends TestCase
         $this->assertDatabaseHas('questionnaires', $data);
     }
 
-    public function testCreateNoPermission()
-    {
-        $data = $this->getJsonFixture('create.json');
-
-        $response = $this->actingAs($this->user)->json('post', '/questionnaires', $data);
-
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
-    }
-
     public function testCreateNoAuth()
     {
         $data = $this->getJsonFixture('create.json');

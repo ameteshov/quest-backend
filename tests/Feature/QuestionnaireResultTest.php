@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Model\Questionnaire;
 use App\Model\QuestionnaireResult;
 use App\Model\User;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 
 class QuestionnaireResultTest extends TestCase
@@ -11,8 +13,8 @@ class QuestionnaireResultTest extends TestCase
     protected $admin;
     protected $userUnableSend;
     protected $userAbleSend;
-    protected $form;
     protected $submittedForm;
+    protected $expiredForm;
 
     public function setUp(): void
     {
@@ -21,7 +23,7 @@ class QuestionnaireResultTest extends TestCase
         $this->userUnableSend = User::find(2);
         $this->userAbleSend = User::find(4);
         $this->submittedForm = QuestionnaireResult::find(1);
-        $this->form = QuestionnaireResult::find(3);
+        $this->expiredForm = QuestionnaireResult::find(3);
     }
 
     public function testSend()
@@ -98,15 +100,25 @@ class QuestionnaireResultTest extends TestCase
     public function testGetByHash()
     {
         $form = $this->loadTestFixture(QuestionnaireResult::class, 'available_form.json');
+        $questionnaire = Questionnaire::find(1);;
 
         $response = $this->json('get', "/forms/{$form->access_hash}");
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $response->assertExactJson($this->getJsonFixture('form.json'));
+        $questionnaire['results'] = [$form->toArray()];
+
+        $response->assertExactJson($questionnaire->toArray());
     }
 
     public function testGetByHashFormSubmitted()
+    {
+        $response = $this->json('get', "/forms/{$this->submittedForm->access_hash}");
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testGetByHashFormExpired()
     {
         $response = $this->json('get', "/forms/{$this->submittedForm->access_hash}");
 
@@ -118,6 +130,119 @@ class QuestionnaireResultTest extends TestCase
         $response = $this->json('get', '/form/0192');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testSubmit()
+    {
+        $form = $this->loadTestFixture(QuestionnaireResult::class, 'available_form.json');
+        $data = [
+            'hash' => $form->access_hash,
+            'content' => [
+                [
+                    'index' => 0,
+                    'result' => 2
+                ],
+                [
+                    'index' => 1,
+                    'result' => 4
+                ],
+            ],
+            'info' => [
+                'phone' => '123',
+                'birthday' => '25.11.2010',
+                'name' => 'Diego Nahuyalize'
+            ]
+        ];
+
+        $response = $this->json('post', "/forms", $data);
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $this->assertDatabaseHas('questionnaires_results', [
+            'access_hash' => $data['hash'],
+            'content' => json_encode($data['content']),
+            'recipient_phone' => $data['info']['phone'],
+            'recipient_name' => $data['info']['name'],
+            'birthday_date' => Carbon::parse($data['info']['birthday'])->toDateString(),
+            'score' => 3
+        ]);
+    }
+
+    public function testSubmitFormExpired()
+    {
+        $data = [
+            'hash' => $this->expiredForm->access_hash,
+            'content' => [
+                [
+                    'index' => 0,
+                    'result' => 2
+                ],
+                [
+                    'index' => 1,
+                    'result' => 4
+                ],
+            ],
+            'info' => [
+                'phone' => '123',
+                'birthday' => '25.11.2010',
+                'name' => 'Diego Nahuyalize'
+            ]
+        ];
+
+        $response = $this->json('post', "/forms", $data);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testSubmitFormSubmitted()
+    {
+        $data = [
+            'hash' => $this->submittedForm->access_hash,
+            'content' => [
+                [
+                    'index' => 0,
+                    'result' => 2
+                ],
+                [
+                    'index' => 1,
+                    'result' => 4
+                ],
+            ],
+            'info' => [
+                'phone' => '123',
+                'birthday' => '25.11.2010',
+                'name' => 'Diego Nahuyalize'
+            ]
+        ];
+
+        $response = $this->json('post', "/forms", $data);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testSubmitFormNotExists()
+    {
+        $data = [
+            'hash' => 'wowoedowedwoekmd',
+            'content' => [
+                [
+                    'index' => 0,
+                    'result' => 2
+                ],
+                [
+                    'index' => 1,
+                    'result' => 4
+                ],
+            ],
+            'info' => [
+                'phone' => '123',
+                'birthday' => '25.11.2010',
+                'name' => 'Diego Nahuyalize'
+            ]
+        ];
+
+        $response = $this->json('post', "/forms", $data);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     public function getInvalidData()

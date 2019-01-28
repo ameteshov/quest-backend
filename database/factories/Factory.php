@@ -42,9 +42,12 @@ $factory->define(App\Model\QuestionnaireResult::class, function (Faker $faker) {
         'recipient_name' => $faker->name,
         'recipient_phone' => $faker->phoneNumber,
         'access_hash' => $faker->sha256,
-        'is_passed' => false,
+        'is_passed' => 0,
         'user_id' => 1,
         'questionnaire_id' => 1,
-        'expired_at' => \Carbon\Carbon::now()->addHour(48)->toDateTimeString()
+        'expired_at' => \Carbon\Carbon::now()->addHour(48)->toDateTimeString(),
+        'birthday_date' => null,
+        'score' => null,
+        'vacancy' => null
     ];
 });

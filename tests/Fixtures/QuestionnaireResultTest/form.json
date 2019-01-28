@@ -4,16 +4,47 @@
     "description": "some words",
     "success_score": 10,
     "result_type": "avg",
-    "content": [
-        {
-            "title": "Question 1"
-        },
-        {
-            "title": "Question 2"
-        }
-    ],
+    "content": {
+        "questions": [
+            {
+                "text": "first"
+            },
+            {
+                "text": "second"
+            }
+        ],
+        "answers": [
+            {
+                "text": "first",
+                "points": "2"
+            },
+            {
+                "text": "second",
+                "points": "4"
+            }
+        ]
+    },
     "is_active": 1,
     "created_at": "2018-12-01 16:00:00",
     "updated_at": "2018-12-01 16:00:00",
-    "type_id": 1
+    "type_id": 1,
+    "results": [
+        {
+            "id": 4,
+            "content": "[]",
+            "email": "lucinda00@borer.com",
+            "recipient_name": "Mrs. Catharine Sporer",
+            "access_hash": "539a5a6fff787148c836893fc0455e6ac80d500165e7e7cd6d901ceaf601078c",
+            "is_passed": 0,
+            "questionnaire_id": 1,
+            "score": null,
+            "user_id": 2,
+            "created_at": "2019-01-28 15:37:10",
+            "updated_at": "2019-01-28 15:37:10",
+            "recipient_phone": "1-581-336-0232",
+            "expired_at": "2019-01-30 15:37:10",
+            "birthday_date": null,
+            "vacancy": null
+        }
+    ]
 }

@@ -29,17 +29,32 @@ class QuestionnaireRepository extends Repository
     {
         $result = $this->getQuery()
             ->whereHas('results', $this->getSearchHashQueryCallback($hash))
+            ->with(['results' => $this->getResultFilterCallback($hash)])
             ->first();
 
         return (null === $result) ? null : $result->toArray();
     }
 
-    protected function getSearchHashQueryCallback($hash)
+    public function isAvailableForRecipient(string $hash)
+    {
+        return $this->getQuery()
+            ->whereHas('results', $this->getSearchHashQueryCallback($hash))
+            ->exists();
+    }
+
+    protected function getSearchHashQueryCallback(string $hash)
     {
         return function ($query) use ($hash) {
             $query->where('is_passed', false)
                 ->where('access_hash', $hash)
                 ->whereRaw('DATE_ADD(expired_at, INTERVAL ? HOUR) > now()', [config('defaults.forms.ttl')]);
+        };
+    }
+
+    protected function getResultFilterCallback(string $hash)
+    {
+        return function ($query) use ($hash) {
+            $query->where('access_hash', $hash);
         };
     }
 }

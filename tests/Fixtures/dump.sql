@@ -8,10 +8,10 @@ INSERT INTO users(id, name, email, questionnaires_count, points, password, reset
 
 INSERT INTO questionnaires(id, name, description, success_score, result_type, content, type_id, is_active, created_at, updated_at)
     VALUES
-(1, 'Skills test', 'some words', 10, 'avg', '[{"title":"Question 1"},{"title":"Question 2"}]', 1, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(2, 'Communication test', 'some words', 100, 'sum', '[{"title":"Question 1"},{"title":"Question 2"}]', 2, 0, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(3, 'IQ test', 'some words', 12, 'avg', '[{"title":"Question 1"},{"title":"Question 2"}]', 3, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(4, 'IQ test inactive', 'some words', 70, 'sum', '[{"title":"Question 1"},{"title":"Question 2"}]', 4, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
+(1, 'Skills test', 'some words', 10, 'avg', '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 1, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(2, 'Communication test', 'some words', 100, 'sum', '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 2, 0, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(3, 'IQ test', 'some words', 12, 'avg', '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 3, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(4, 'IQ test inactive', 'some words', 70, 'sum', '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 4, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
 
 INSERT INTO questionnaire_types(id, name)
     VALUES

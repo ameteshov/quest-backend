@@ -22,27 +22,24 @@ class QuestionnaireResultService extends Service
 
     public function submit(array $data)
     {
-        $where = ['access_hash' => $data['hash']];
+        $data['score'] = $this->getQuestionnaireScore($data);
 
-        $data = [
-            'content' => $data['content'],
-            'recipient_phone' => $data['phone'],
-            'is_passed' => true,
-            'score' => $this->getQuestionnaireScore($data)
-        ];
-
-        $this->repository->updateBy($where, $data);
+        $this->repository->saveSubmitted($data['hash'], $data);
     }
 
     protected function getQuestionnaireScore($data)
     {
         $questionnaire = $this->questionnaireRepository->findByHash($data['hash']);
 
-        if ($questionnaire['type'] === Questionnaire::AVG_TYPE) {
+        if (Questionnaire::AVG_TYPE === $questionnaire['result_type']) {
             return $this->getAverageScore($data['content']);
         }
 
-        return $this->getSummaryScore($data['content']);
+        if (Questionnaire::SUM_TYPE === $questionnaire['result_type']) {
+            return $this->getSummaryScore($data['content']);
+        }
+
+        return null;
     }
 
     protected function getAverageScore(array $answers)

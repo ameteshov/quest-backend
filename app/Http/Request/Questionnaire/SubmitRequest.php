@@ -2,9 +2,8 @@
 
 namespace App\Request\Questionnaire;
 
-use App\Model\Role;
 use App\Request\Request;
-use App\Service\QuestionnaireResultService;
+use App\Service\QuestionnaireService;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class SubmitRequest extends Request
@@ -19,7 +18,13 @@ class SubmitRequest extends Request
         return [
             'hash' => 'required|string',
             'content' => 'required|array',
-            'phone' => 'required|string'
+            'content.*.index' => 'required|integer',
+            'content.*.result' => 'required',
+            'info' => 'required|array',
+            'info.phone' => 'required|string',
+            'info.email' => 'string|nullable|email',
+            'info.name' => 'required|string',
+            'info.birthday' => 'required|date',
         ];
     }
 
@@ -27,9 +32,9 @@ class SubmitRequest extends Request
     {
         parent::validateResolved();
 
-        $service = app(QuestionnaireResultService::class);
+        $service = app(QuestionnaireService::class);
 
-        if (!$service->isAvailable($this->input('hash'))) {
+        if (!$service->isAvailableForRecipient($this->input('hash'))) {
             throw new BadRequestHttpException('Form not exists or already was submitted');
         }
     }

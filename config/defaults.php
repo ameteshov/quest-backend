@@ -18,6 +18,6 @@ return [
         'ttl' => env('FORMS_TTL', 48) // in hours
     ],
     'subscription' => [
-        'ttl' => env('SUBSCRIPTION_TTL', 30) //in days
+        'ttl' => env('SUBSCRIPTION_TTL', 1) //in months
     ]
 ];

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Model\User;
-use App\Service\PaymentTransactionService;
+use App\Service\PaymentService;
 use App\Util\YandexPaymentClient;
 use Illuminate\Http\Response;
 use YandexCheckout\Client;
@@ -103,7 +103,7 @@ class PaymentTest extends TestCase
     public function testHandleSubscription()
     {
         $serviceResponse = $this->getJsonFixture('client_get_payment_info_response_success.json');
-        $service = app(PaymentTransactionService::class);
+        $service = app(PaymentService::class);
         $service->updateBy(['id' => 1], ['plan_id' => 5]);
 
         $this->mock(Client::class, function ($item) use ($serviceResponse) {

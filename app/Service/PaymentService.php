@@ -99,7 +99,7 @@ class PaymentService extends Service
         $user = $this->userRepository->find($userId);
 
         if (Plan::SUB_TYPE === $plan['type']) {
-            $subscribeBefore = Carbon::now()->addDays(config('defaults.subscription.ttl'))->toDateString();
+            $subscribeBefore = Carbon::now()->addMonth(config('defaults.subscription.ttl'))->toDateString();
             $data = [
                 'plan_id' => $plan['id'],
                 'subscribed_before' => $subscribeBefore,

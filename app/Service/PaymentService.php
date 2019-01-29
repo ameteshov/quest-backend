@@ -3,11 +3,13 @@
 namespace App\Service;
 
 use App\Exceptions\UnableTransactionCreationException;
+use App\Model\Plan;
 use App\Repository\PaymentRepository;
 use App\Repository\PlanRepository;
 use App\Repository\UserRepository;
 use App\Support\Interfaces\PaymentClientInterface;
 use App\Util\YandexPaymentClient;
+use Carbon\Carbon;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -96,10 +98,18 @@ class PaymentService extends Service
         $plan = $this->planRepository->find($planId);
         $user = $this->userRepository->find($userId);
 
-        $data = [
-            'points' => (int)$plan['points'] + (int)$user['points'],
-            'questionnaires_count' => (int)$plan['points'] + (int)$user['questionnaires_count']
-        ];
+        if (Plan::SUB_TYPE === $plan['type']) {
+            $subscribeBefore = Carbon::now()->addDays(config('defaults.subscription.ttl'))->toDateString();
+            $data = [
+                'plan_id' => $plan['id'],
+                'subscribed_before' => $subscribeBefore,
+                'points' => 0
+            ];
+        } else {
+            $data = [
+                'points' => $plan['points']
+            ];
+        }
 
         $this->userRepository->update($userId, $data, true);
     }

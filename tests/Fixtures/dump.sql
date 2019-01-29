@@ -1,10 +1,10 @@
-INSERT INTO users(id, name, email, questionnaires_count, points, password, reset_token, role_id, created_at, updated_at)
+INSERT INTO users(id, name, email, questionnaires_count, points, password, reset_token, role_id, subscribed_before, created_at, updated_at)
     VALUES
-(1, 'Diego Alvarez', 'admin@example.net', null, null, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(2, 'Ivan Dubinov', 'ivan.dubinov@example.net', 0, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(3, 'Peter Griffin', 'peter.griffin@example.net', 10, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
-(4, 'Megan Griffin', 'megan.griffin@example.net', 20, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
-(5, 'Louise Griffin', 'louise.griffin@example.net', 11, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-01 16:00:00');
+(1, 'Diego Alvarez', 'admin@example.net', null, null, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 1, null, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(2, 'Ivan Dubinov', 'ivan.dubinov@example.net', 1, 0, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, null, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(3, 'Peter Griffin', 'peter.griffin@example.net', 3, 0, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, '2018-12-02 16:00:00', '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
+(4, 'Megan Griffin', 'megan.griffin@example.net', 20, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, null, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
+(5, 'Louise Griffin', 'louise.griffin@example.net', 11, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, null, '2018-12-02 16:00:00', '2018-12-01 16:00:00');
 
 INSERT INTO questionnaires(id, name, description, success_score, result_type, content, type_id, is_active, created_at, updated_at)
     VALUES
@@ -21,12 +21,13 @@ INSERT INTO questionnaire_types(id, name)
 (4, 'straight'),
 (5, 'experience');
 
-INSERT INTO plans(id, name, price, points, description, is_active, created_at, updated_at)
+INSERT INTO plans(id, name, price, points, type, description, is_active, created_at, updated_at)
     VALUES
-(1, 'light', 200, 100, '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(2, 'half-light', 300, 200, '["line 1", "line 2"]', false, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(3, 'medium', 100, 400, '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(4, 'premium', 100, 500, '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
+(1, 'light', 200, 100, 'purchase', '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(2, 'half-light', 300, 200, 'purchase', '["line 1", "line 2"]', false, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(3, 'medium', 100, 400, 'purchase', '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(4, 'premium', 100, 500, 'purchase', '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(5, 'subscription', 600, 500, 'subscription', '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
 
 INSERT INTO questionnaires_results(id, content, email, recipient_name, score, access_hash, is_passed, questionnaire_id, user_id, expired_at)
     VALUES

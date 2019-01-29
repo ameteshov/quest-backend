@@ -13,6 +13,7 @@ class QuestionnaireResultTest extends TestCase
     protected $admin;
     protected $userUnableSend;
     protected $userAbleSend;
+    protected $userSubscriptionExpired;
     protected $submittedForm;
     protected $expiredForm;
 
@@ -22,11 +23,31 @@ class QuestionnaireResultTest extends TestCase
 
         $this->userUnableSend = User::find(2);
         $this->userAbleSend = User::find(4);
+        $this->userSubscriptionExpired = User::find(3);
         $this->submittedForm = QuestionnaireResult::find(1);
         $this->expiredForm = QuestionnaireResult::find(3);
     }
 
     public function testSend()
+    {
+        $data = [
+            'email' => 'vasya@mail.test',
+            'name' => 'vasya ignatiy'
+        ];
+
+        $response = $this->actingAs($this->userAbleSend)->json('post', '/questionnaires/1/send', [
+            'list' => [$data]
+        ]);
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $this->assertDatabaseHas('questionnaires_results', [
+            'email' => $data['email'],
+            'recipient_name' => $data['name'],
+            'questionnaire_id' => 1
+        ]);
+    }
+
+    public function testSendUserHasSubscription()
     {
         $data = [
             'email' => 'vasya@mail.test',
@@ -53,6 +74,20 @@ class QuestionnaireResultTest extends TestCase
         ];
 
         $response = $this->actingAs($this->userUnableSend)->json('post', '/questionnaires/1/send', [
+            'list' => [$data]
+        ]);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testSendSubscriptionExpired()
+    {
+        $data = [
+            'email' => 'vasya@mail.test',
+            'name' => 'vasya ignatiy'
+        ];
+
+        $response = $this->actingAs($this->userSubscriptionExpired)->json('post', '/questionnaires/1/send', [
             'list' => [$data]
         ]);
 

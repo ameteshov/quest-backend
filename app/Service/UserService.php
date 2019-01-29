@@ -6,6 +6,7 @@ use App\Jobs\SendRegistrationEmailJob;
 use App\Jobs\SendResetPasswordEmailJob;
 use App\Model\Role;
 use App\Repository\UserRepository;
+use Carbon\Carbon;
 use Illuminate\Contracts\Hashing\Hasher;
 
 /**
@@ -84,5 +85,38 @@ class UserService extends Service
         $filters['with'] = ['plan'];
 
         return $this->repository->search($filters);
+    }
+
+    public function isLimitExceeded(int $userId, ?int $sendCount = 0)
+    {
+        $user = $this->repository->find($userId);
+
+        if ($this->userSubscriptionActive($user)) {
+            return false;
+        }
+
+        $limit = (int)array_get($user, 'points');
+
+        return $sendCount > $limit;
+    }
+
+    public function hasActiveSubscription($userId)
+    {
+        $user = $this->repository->find($userId);
+
+        return $this->userSubscriptionActive($user);
+    }
+
+    protected function userSubscriptionActive(array $user)
+    {
+        $subscriptionEnd = array_get($user, 'subscribed_before');
+
+        if (null === $subscriptionEnd) {
+            return false;
+        }
+
+        $now = Carbon::now();
+
+        return $now->lessThan(Carbon::parse($subscriptionEnd));
     }
 }

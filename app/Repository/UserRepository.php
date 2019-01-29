@@ -27,11 +27,13 @@ class UserRepository extends Repository
             ->getResult();
     }
 
-    public function decrementAvailableSurveys(int $userId)
+    public function updateSendCount(int $userId)
     {
-        $this->getQuery()
-            ->where('id', $userId)
-            ->decrement('questionnaires_count');
+        $query = $this->getQuery()
+            ->where('id', $userId);
+
+        $query->increment('questionnaires_count');
+        $query->decrement('points');
     }
 
     protected function filterByCurrentUser(): ModelRepositoryInterface

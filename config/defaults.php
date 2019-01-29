@@ -5,7 +5,7 @@ return [
         'support' => env('SUPPORT_EMAIL', 'support@hr-tophunter.ru')
     ],
     'free_plan' => [
-        'points' => 100
+        'points' => env('FREE_PLAN_POINTS', 15)
     ],
     'checkout' => [
         'merchant_key' => env('MERCHANT_KEY'),
@@ -15,6 +15,9 @@ return [
         'return_url' => env('CHECKOUT_RETURN_URL', env('FRONTEND_URL') . '/panel/payments/finished')
     ],
     'forms' => [
-        'ttl' => 48
+        'ttl' => env('FORMS_TTL', 48) // in hours
+    ],
+    'subscription' => [
+        'ttl' => env('SUBSCRIPTION_TTL', 30) //in days
     ]
 ];

@@ -4,6 +4,7 @@ namespace App\Request\Questionnaire;
 
 use App\Request\Request;
 use App\Service\QuestionnaireService;
+use App\Service\UserService;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -28,6 +29,7 @@ class SendRequest extends Request
         parent::validateResolved();
 
         $service = app(QuestionnaireService::class);
+        $userService = app(UserService::class);
         $questionnaire = [
             'id' => $this->route('id'),
             'is_active' => true
@@ -37,7 +39,7 @@ class SendRequest extends Request
             throw new NotFoundHttpException('Questionnaire not found');
         }
 
-        if ($service->isLimitExceeded($this->user()->id, $this->getListCount())) {
+        if ($userService->isLimitExceeded($this->user()->id, $this->getListCount())) {
             throw new BadRequestHttpException('You can not sent questionnaires anymore, please upgrade plan');
         }
     }

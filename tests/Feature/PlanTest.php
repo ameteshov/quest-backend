@@ -18,9 +18,21 @@ class PlanTest extends TestCase
         $this->user = User::find(2);
     }
 
-    public function testCreate()
+    public function testCreatePurchasePlan()
     {
         $data = $this->getJsonFixture('plan.json');
+
+        $response = $this->actingAs($this->admin)->json('post', '/plans', $data);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $data['description'] = json_encode($data['description']);
+        $this->assertDatabaseHas('plans', $data);
+    }
+
+    public function testCreateSubscriptionPlan()
+    {
+        $data = $this->getJsonFixture('subscription.json');
 
         $response = $this->actingAs($this->admin)->json('post', '/plans', $data);
 
@@ -48,9 +60,12 @@ class PlanTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
-    public function testCreateInvalidRequest()
+    /**
+     * @dataProvider getInvalidPostRequestData
+     */
+    public function testCreateInvalidRequest($data)
     {
-        $response = $this->actingAs($this->admin)->json('post', '/plans', []);
+        $response = $this->actingAs($this->admin)->json('post', '/plans', $data);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -220,6 +235,33 @@ class PlanTest extends TestCase
                     'price' => 'string',
                     'points' => 'string',
                     'is_active' => 'string'
+                ]
+            ]
+        ];
+    }
+
+    public function getInvalidPostRequestData()
+    {
+        return [
+            [
+                'data' => []
+            ],
+            [
+                'data' => [
+                    'name' => 'medium',
+                    'description' => ['test'],
+                    'is_active' => 1,
+                    'type' => 'purchase'
+                ]
+            ],
+            [
+                'data' => [
+                    'name' => 123,
+                    'description' => 'string',
+                    'price' => 'string',
+                    'points' => 'string',
+                    'is_active' => 'string',
+                    'type' => 'some another'
                 ]
             ]
         ];

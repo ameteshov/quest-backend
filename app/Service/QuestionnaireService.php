@@ -45,13 +45,6 @@ class QuestionnaireService extends Service
         }
     }
 
-    public function isLimitExceeded(int $userId, ?int $sendCount = 0)
-    {
-        $limit = $this->userRepository->getLimit($userId);
-
-        return $sendCount > $limit;
-    }
-
     public function search(?array $filters = [])
     {
         $filters['with'] = ['results'];
@@ -72,6 +65,8 @@ class QuestionnaireService extends Service
 
     protected function sendToRecipient($id, $senderId, array $recipientData)
     {
+        $userService = app(UserService::class);
+
         $accessHash = md5(uniqid('', true));
 
         $this->repository->addRecipient($id, [
@@ -82,7 +77,9 @@ class QuestionnaireService extends Service
             'expired_at' => Carbon::now()->addHour(config('defaults.forms.ttl'))->toDateTimeString()
         ]);
 
-        $this->userRepository->decrementAvailableSurveys($senderId);
+        if (!$userService->hasActiveSubscription($senderId)) {
+            $this->userRepository->updateSendCount($senderId);
+        }
 
         dispatch(
             new SendFormEmailJob($recipientData['email'], [

@@ -10,7 +10,8 @@
             ],
             "price": "200.00",
             "points": 100,
-            "is_active": 1
+            "is_active": 1,
+            "type": "purchase"
         },
         {
             "id": 3,
@@ -21,7 +22,8 @@
             ],
             "price": "100.00",
             "points": 400,
-            "is_active": 1
+            "is_active": 1,
+            "type": "purchase"
         },
         {
             "id": 4,
@@ -32,7 +34,20 @@
             ],
             "price": "100.00",
             "points": 500,
-            "is_active": 1
+            "is_active": 1,
+            "type": "purchase"
+        },
+        {
+            "id": 5,
+            "name": "subscription",
+            "description": [
+                "line 1",
+                "line 2"
+            ],
+            "price": "600.00",
+            "points": 500,
+            "is_active": 1,
+            "type": "subscription"
         }
     ],
     "first_page_url": "http:\/\/localhost\/plans?page=1",
@@ -43,6 +58,6 @@
     "path": "http:\/\/localhost\/plans",
     "per_page": 15,
     "prev_page_url": null,
-    "to": 3,
-    "total": 3
+    "to": 4,
+    "total": 4
 }

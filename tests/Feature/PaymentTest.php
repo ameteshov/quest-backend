@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Model\User;
+use App\Service\PaymentTransactionService;
 use App\Util\YandexPaymentClient;
 use Illuminate\Http\Response;
 use YandexCheckout\Client;
@@ -89,7 +90,37 @@ class PaymentTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $this->assertDatabaseHas('users', [
             'id' => $this->userPaid->id,
-            'points' => 200
+            'points' => 100
+        ]);
+        $this->assertDatabaseHas('payments', [
+            'payment_id' => $notification['object']['id'],
+            'status' => YandexPaymentClient::PAYMENT_STATUS_SUCCESS,
+            'is_paid' => 1
+        ]);
+        $this->assertDatabaseMissing('payment_transactions', ['user_id' => $this->userPaid->id]);
+    }
+
+    public function testHandleSubscription()
+    {
+        $serviceResponse = $this->getJsonFixture('client_get_payment_info_response_success.json');
+        $service = app(PaymentTransactionService::class);
+        $service->updateBy(['id' => 1], ['plan_id' => 5]);
+
+        $this->mock(Client::class, function ($item) use ($serviceResponse) {
+            $item->shouldReceive('getPaymentInfo')
+                ->andReturn(new PaymentResponse($serviceResponse))
+                ->shouldReceive('setAuth')
+                ->andReturn($this);
+        });
+
+        $notification = $this->getJsonFixture('payment_notification_success.json');
+
+        $response = $this->json('post', 'payments/webhooks', $notification);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $this->assertDatabaseHas('users', [
+            'id' => $this->userPaid->id,
+            'points' => 0
         ]);
         $this->assertDatabaseHas('payments', [
             'payment_id' => $notification['object']['id'],

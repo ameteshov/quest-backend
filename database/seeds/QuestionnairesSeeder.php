@@ -10,7 +10,7 @@ class QuestionnairesSeeder extends Seeder
             'name' => 'Тест на стрессоустойчивость',
             'description' => 'Немного описания не помешает) Тут надо написать какой крутой тест и что по статистике он отсеивает тонну людей',
             'is_active' => true,
-            'success_score' => 4,
+            'success_score' => 60,
             'content' => [
                 'questions' => [
                     ['text' => 'Вы едите, по крайней мере, одно горячее блюдо в день'],

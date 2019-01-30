@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\{
     AuthController, QuestionnaireController, UserController, PaymentController,
-    PlanController, QuestionnaireTypeController
+    PlanController, QuestionnaireTypeController, SocialAuthController
 };
 
 /*
@@ -29,6 +29,9 @@ Route::middleware($guestGroup)->group(function () {
     Route::post('forms', QuestionnaireController::class.'@submit');
 
     Route::post('payments/webhooks', PaymentController::class.'@handle');
+
+    Route::get('social-login/google', SocialAuthController::class.'@googleLogin');
+    Route::get('social-login/google-plus-callback', SocialAuthController::class.'@googleLoginCallback');
 });
 
 Route::get('/auth/refresh', function() {
@@ -39,6 +42,7 @@ Route::middleware($authGroup)->group(function () {
     Route::post('questionnaires', QuestionnaireController::class.'@create');
     Route::get('questionnaires', QuestionnaireController::class.'@search');
     Route::get('questionnaires/{id}', QuestionnaireController::class.'@get')->where('id', '[0-9]+');
+    Route::get('questionnaires/{id}/statistic', QuestionnaireController::class.'@getStatistic')->where('id', '[0-9]+');
     Route::delete('questionnaires/{id}', QuestionnaireController::class.'@delete')->where('id', '[0-9]+');
     Route::put('questionnaires/{id}', QuestionnaireController::class.'@update')->where('id', '[0-9]+');
 

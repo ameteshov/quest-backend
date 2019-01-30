@@ -8,6 +8,7 @@ use App\Model\Role;
 use App\Repository\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Hashing\Hasher;
+use Tymon\JWTAuth\JWTAuth;
 
 /**
  * @property UserRepository $repository
@@ -42,7 +43,6 @@ class UserService extends Service
     {
         $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
         $userData['reset_token'] = uniqid('', true);
-        $userData['questionnaires_count'] = config('defaults.free_plan.points');
         $userData['points'] = config('defaults.free_plan.points');
 
         $user = $this->repository->create($userData);
@@ -50,6 +50,25 @@ class UserService extends Service
         dispatch(new SendResetPasswordEmailJob($user['email'], ['data' => $user]));
 
         return $user;
+    }
+
+    public function createOrLoginFormSocial($user, string $provider)
+    {
+        $authService = app(JWTAuth::class);
+        $userObject = $this->repository->findBy(['email' => $user->getEmail()]);
+
+        if (!empty($user)) {
+            return $authService->fromUser($userObject);
+        }
+
+        $userData['name'] = $user->getName();
+        $userData['email'] = $user->getEmail();
+        $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
+        $userData['points'] = config('defaults.free_plan.points');
+
+        $createdUser = $this->repository->create($userData);
+
+        return $authService->fromUser($createdUser);
     }
 
     public function update(int $id, array $data, int $role): void

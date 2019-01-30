@@ -19,5 +19,6 @@ return [
     ],
     'subscription' => [
         'ttl' => env('SUBSCRIPTION_TTL', 1) //in months
-    ]
+    ],
+    'frontend_url' => env('FRONTEND_URL')
 ];

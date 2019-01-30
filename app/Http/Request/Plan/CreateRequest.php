@@ -18,7 +18,7 @@ class CreateRequest extends Request
         return [
             'name' => 'required|string|unique:plans,name',
             'price' => 'required_if:type,' . Plan::PURCHASE_TYPE . '|numeric',
-            'points' => 'required_if:type,' . Plan::PURCHASE_TYPE . '|integer',
+            'points' => 'required_if:type,' . Plan::PURCHASE_TYPE . '|integer|nullable',
             'type' => 'required|string|in:' . implode(',', [Plan::SUB_TYPE, Plan::PURCHASE_TYPE]),
             'description' => 'required|array',
             'is_active' => 'required|boolean'

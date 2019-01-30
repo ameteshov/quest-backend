@@ -26,6 +26,13 @@ class QuestionnaireService extends Service
         $this->resultsRepository = app(QuestionnaireResultRepository::class);
     }
 
+    public function create(int $userId, array $data)
+    {
+        $data['user_id'] = $userId;
+
+        return $this->repository->create($data);
+    }
+
     public function find(int $id, array $user, ?array $with = [])
     {
         if (Role::ROLE_USER === $user['role_id']) {
@@ -61,6 +68,11 @@ class QuestionnaireService extends Service
         }
 
         return $this->repository->exists($where);
+    }
+
+    public function getStatistic(int $id, array $user, array $requestData)
+    {
+        $this->resultsRepository->getStatisticForQuestionnaire($id);
     }
 
     protected function sendToRecipient($id, $senderId, array $recipientData)

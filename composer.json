@@ -13,6 +13,7 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
+        "laravel/socialite": "^4.0",
         "laravel/tinker": "^1.0",
         "tymon/jwt-auth": "0.5.*",
         "yandex-money/yandex-checkout-sdk-php": "^1.1"

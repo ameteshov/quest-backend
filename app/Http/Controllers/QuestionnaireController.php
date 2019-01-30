@@ -18,7 +18,7 @@ class QuestionnaireController extends Controller
 {
     public function create(CreateRequest $request, QuestionnaireService $service)
     {
-        $entity = $service->create($request->all());
+        $entity = $service->create($request->user()->id, $request->all());
 
         return response()->json($entity);
     }
@@ -74,5 +74,12 @@ class QuestionnaireController extends Controller
         $questionnaire = $service->findByHash($hash);
 
         return response()->json($questionnaire);
+    }
+
+    public function getStatistic(GetRequest $request, QuestionnaireService $service, $id)
+    {
+        $entity = $service->getStatistic($id, $request->user()->toArray(), $request->all());
+
+        return response()->json($entity);
     }
 }

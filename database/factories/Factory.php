@@ -31,7 +31,14 @@ $factory->define(App\Model\Questionnaire::class, function (Faker $faker) {
         'description' => $faker->text(),
         'is_active' => true,
         'success_score' => $faker->numberBetween(5, 200),
-        'result_type' => \App\Model\Questionnaire::SUM_TYPE
+        'result_type' => \App\Model\Questionnaire::SUM_TYPE,
+        'type_id' => 1
+    ];
+});
+
+$factory->define(App\Model\QuestionnaireType::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name
     ];
 });
 

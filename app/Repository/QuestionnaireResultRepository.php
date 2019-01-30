@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Model\QuestionnaireResult;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class QuestionnaireResultRepository extends Repository
 {
@@ -28,5 +29,23 @@ class QuestionnaireResultRepository extends Repository
         }
 
         $this->updateBy(['access_hash' => $hash], $updatedData);
+    }
+
+    public function getStatisticForUser(int $userId)
+    {
+        $result = $this->getQuery()
+            ->addSelect(DB::raw('sum(score) as score_sum'))
+            ->where('user_id', $userId)
+            ->whereHas('questionnaire', function ($query) {
+                $query->whereNotNull('type_id');
+            })
+            ->groupBy('email')
+            ->orderBy('score', 'desc')
+            ->orderBy('vacancy', 'asc')
+            ->with('questionnaire')
+            ->get()
+            ->toArray();
+
+        return $result ?? [];
     }
 }

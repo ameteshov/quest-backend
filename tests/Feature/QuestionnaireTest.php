@@ -157,6 +157,21 @@ class QuestionnaireTest extends TestCase
         $response->assertExactJson($this->getJsonFixture($fixture));
     }
 
+    public function testGetStatistic()
+    {
+        $this->loadTestDump('dump.sql');
+        $user = User::find(4);
+
+        $response = $this->actingAs($user)->json('get', '/questionnaires/statistic');
+
+        //$response->assertExactJson($this->getJsonFixture($fixture));
+    }
+
+    public function testGetStatisticNoAuth()
+    {
+
+    }
+
     public function getCreateRequestData()
     {
         return [

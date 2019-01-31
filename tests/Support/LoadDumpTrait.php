@@ -27,6 +27,19 @@ trait LoadDumpTrait
         }
     }
 
+    public function loadTestDump(string $filename)
+    {
+        $path = base_path("tests/Fixtures/{$this->getTestClassName()}/$filename");
+
+        if (!is_file($path) || !is_readable($path)) {
+            throw new \LogicException("File path {$path} not readable or not exists");
+        }
+
+        $content = file_get_contents($path);
+
+        DB::unprepared($content);
+    }
+
     public function getSql(): string
     {
         $dumpPath = base_path('tests/Fixtures/dump.sql');

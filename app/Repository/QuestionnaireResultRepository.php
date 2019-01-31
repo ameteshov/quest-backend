@@ -31,20 +31,31 @@ class QuestionnaireResultRepository extends Repository
         $this->updateBy(['access_hash' => $hash], $updatedData);
     }
 
-    public function getStatisticForUser(int $userId)
+    public function getStatisticForUser(int $userId, array $vacancies = [])
     {
-        $result = $this->getQuery()
+        // TODO:: добавить валидацию чтобы запрещать людям слать анкеты на разные вакансии или переработать этот функционал к хуям
+        $query = $this->getQuery()
             ->addSelect(DB::raw('sum(score) as score_sum'))
-            ->where('user_id', $userId)
+            ->addSelect(DB::raw('sum(questionnaires.success_score) as score_max'))
+            //->addSelect(DB::raw("GROUP_CONCAT(vacancy SEPARATOR ',') as vacancy_join"))
+            ->addSelect(['email', 'recipient_name', 'vacancy'])
+            ->where('questionnaires_results.user_id', $userId)
             ->whereHas('questionnaire', function ($query) {
-                $query->whereNotNull('type_id');
+                $query->whereNotNull('questionnaires.type_id');
             })
+            ->join('questionnaires', 'questionnaires_results.questionnaire_id', '=', 'questionnaires.id')
             ->groupBy('email')
-            ->orderBy('score', 'desc')
-            ->orderBy('vacancy', 'asc')
-            ->with('questionnaire')
-            ->get()
-            ->toArray();
+            ->groupBy('recipient_name')
+            ->groupBy('vacancy')
+            ->orderBy('score_sum', 'desc')
+            //->orderBy('vacancy_join', 'asc');
+            ->orderBy('vacancy', 'asc');
+
+        if ([] !== $vacancies) {
+            $query->havingRaw(DB::raw("vacancy_join like '%?%'", [implode(',', $vacancies)]));
+        }
+
+        $result = $query->get()->toArray();
 
         return $result ?? [];
     }

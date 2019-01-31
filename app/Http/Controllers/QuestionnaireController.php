@@ -12,6 +12,7 @@ use App\Request\Questionnaire\{CreateRequest,
     UpdateRequest};
 use App\Service\QuestionnaireResultService;
 use App\Service\QuestionnaireService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class QuestionnaireController extends Controller
@@ -76,9 +77,9 @@ class QuestionnaireController extends Controller
         return response()->json($questionnaire);
     }
 
-    public function getStatistic(GetRequest $request, QuestionnaireService $service, $id)
+    public function getStatistic(Request $request, QuestionnaireService $service)
     {
-        $entity = $service->getStatistic($id, $request->user()->toArray(), $request->all());
+        $entity = $service->getStatistic($request->user()->id);
 
         return response()->json($entity);
     }

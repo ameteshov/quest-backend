@@ -70,9 +70,9 @@ class QuestionnaireService extends Service
         return $this->repository->exists($where);
     }
 
-    public function getStatistic(int $id, array $user, array $requestData)
+    public function getStatistic(int $userId)
     {
-        $this->resultsRepository->getStatisticForQuestionnaire($id);
+        return $this->resultsRepository->getStatisticForUser($userId);
     }
 
     protected function sendToRecipient($id, $senderId, array $recipientData)

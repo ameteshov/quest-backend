@@ -42,7 +42,7 @@ Route::middleware($authGroup)->group(function () {
     Route::post('questionnaires', QuestionnaireController::class.'@create');
     Route::get('questionnaires', QuestionnaireController::class.'@search');
     Route::get('questionnaires/{id}', QuestionnaireController::class.'@get')->where('id', '[0-9]+');
-    Route::get('questionnaires/{id}/statistic', QuestionnaireController::class.'@getStatistic')->where('id', '[0-9]+');
+    Route::get('questionnaires/statistic', QuestionnaireController::class.'@getStatistic');
     Route::delete('questionnaires/{id}', QuestionnaireController::class.'@delete')->where('id', '[0-9]+');
     Route::put('questionnaires/{id}', QuestionnaireController::class.'@update')->where('id', '[0-9]+');
 

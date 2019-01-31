@@ -11,6 +11,7 @@ class QuestionnairesSeeder extends Seeder
             'description' => 'Немного описания не помешает) Тут надо написать какой крутой тест и что по статистике он отсеивает тонну людей',
             'is_active' => true,
             'success_score' => 60,
+            'max_score' => 100,
             'content' => [
                 'questions' => [
                     ['text' => 'Вы едите, по крайней мере, одно горячее блюдо в день'],

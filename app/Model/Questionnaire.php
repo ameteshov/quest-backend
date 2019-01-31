@@ -4,11 +4,8 @@ namespace App\Model;
 
 class Questionnaire extends Model
 {
-    public const AVG_TYPE = 'avg';
-    public const SUM_TYPE = 'sum';
-
     protected $fillable = [
-        'name', 'content', 'description', 'is_active', 'success_score', 'result_type', 'type_id', 'user_id'
+        'name', 'content', 'description', 'is_active', 'success_score', 'max_score', 'type_id', 'user_id'
     ];
 
     protected $casts = [

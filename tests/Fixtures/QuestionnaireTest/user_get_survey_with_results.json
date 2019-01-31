@@ -3,7 +3,6 @@
     "name": "Skills test",
     "description": "some words",
     "success_score": 10,
-    "result_type": "avg",
     "content": {
         "questions": [
             {
@@ -28,6 +27,8 @@
     "created_at": "2018-12-01 16:00:00",
     "updated_at": "2018-12-01 16:00:00",
     "type_id": 1,
+    "user_id": null,
+    "max_score": 12,
     "results": [
         {
             "id": 1,

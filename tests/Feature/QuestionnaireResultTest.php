@@ -198,7 +198,7 @@ class QuestionnaireResultTest extends TestCase
             'recipient_phone' => $data['info']['phone'],
             'recipient_name' => $data['info']['name'],
             'birthday_date' => Carbon::parse($data['info']['birthday'])->toDateString(),
-            'score' => 3
+            'score' => 6
         ]);
     }
 

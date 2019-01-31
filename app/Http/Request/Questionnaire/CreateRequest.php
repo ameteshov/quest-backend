@@ -18,8 +18,12 @@ class CreateRequest extends Request
         return [
             'name' => 'required|string',
             'content' => 'required|array',
+            'content.questions' => 'required|array',
+            'content.questions.*.text' => 'required|string',
+            'content.answers' => 'required|array',
+            'content.answers.*.text' => 'required|string',
+            'content.answers.*.points' => 'required|numeric',
             'success_score' => 'integer',
-            'result_type' => 'string|in:' . implode(',', [Questionnaire::SUM_TYPE, Questionnaire::AVG_TYPE]),
             'type_id' => 'integer|nullable|exists:questionnaire_types,id',
             'description' => 'string'
         ];

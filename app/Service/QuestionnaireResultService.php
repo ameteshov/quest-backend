@@ -31,22 +31,11 @@ class QuestionnaireResultService extends Service
     {
         $questionnaire = $this->questionnaireRepository->findByHash($data['hash']);
 
-        if (Questionnaire::AVG_TYPE === $questionnaire['result_type']) {
-            return $this->getAverageScore($data['content']);
-        }
-
-        if (Questionnaire::SUM_TYPE === $questionnaire['result_type']) {
+        if (null !== array_get($questionnaire, 'type_id')) {
             return $this->getSummaryScore($data['content']);
         }
 
         return null;
-    }
-
-    protected function getAverageScore(array $answers)
-    {
-        $sum = $this->getSummaryScore($answers);
-
-        return round($sum / count($answers));
     }
 
     protected function getSummaryScore(array $answers)

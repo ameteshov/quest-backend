@@ -27,6 +27,7 @@ class QuestionnaireTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
         $data['content'] = json_encode($data['content']);
+        $data['max_score'] = 4;
 
         $this->assertDatabaseHas('questionnaires', $data);
     }

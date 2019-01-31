@@ -6,12 +6,12 @@ INSERT INTO users(id, name, email, questionnaires_count, points, password, reset
 (4, 'Megan Griffin', 'megan.griffin@example.net', 20, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, null, '2018-12-02 16:00:00', '2018-12-01 16:00:00'),
 (5, 'Louise Griffin', 'louise.griffin@example.net', 11, 100, '$2y$10$uv1XO27o56AX8aiMtMZpDuEWnquWrIXjlVpDMjonKNyVAnDd6g1xy', null, 2, null, '2018-12-02 16:00:00', '2018-12-01 16:00:00');
 
-INSERT INTO questionnaires(id, name, description, success_score, content, type_id, is_active, created_at, updated_at)
+INSERT INTO questionnaires(id, name, description, success_score, max_score, content, type_id, is_active, created_at, updated_at)
     VALUES
-(1, 'Skills test', 'some words', 10, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 1, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(2, 'Communication test', 'some words', 100, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 2, 0, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(3, 'IQ test', 'some words', 12, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 3, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
-(4, 'IQ test inactive', 'some words', 70, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 4, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
+(1, 'Skills test', 'some words', 10, 12, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 1, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(2, 'Communication test', 'some words', 100, 120, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 2, 0, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(3, 'IQ test', 'some words', 12, 18, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 3, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
+(4, 'IQ test inactive', 'some words', 70, 90, '{"questions":[{"text": "first"},{"text": "second"}], "answers": [{"text": "first","points": "2"},{"text": "second","points": "4"}]}', 4, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
 
 INSERT INTO questionnaire_types(id, name)
     VALUES

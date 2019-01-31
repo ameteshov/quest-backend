@@ -29,6 +29,7 @@ class QuestionnaireService extends Service
     public function create(int $userId, array $data)
     {
         $data['user_id'] = $userId;
+        $data['max_score'] = $this->calculateMaxScore($data['content']);
 
         return $this->repository->create($data);
     }
@@ -36,8 +37,7 @@ class QuestionnaireService extends Service
     public function find(int $id, array $user, ?array $with = [])
     {
         if (Role::ROLE_USER === $user['role_id']) {
-            $with =
-                in_array('results', $with, true) ?
+            $with = in_array('results', $with, true) ?
                 $this->getFilteredResultRelation($user['id'], $with) :
                 $with;
         }
@@ -108,5 +108,19 @@ class QuestionnaireService extends Service
         };
 
         return $with;
+    }
+
+    protected function calculateMaxScore(array $data)
+    {
+        $maxAnswer = max(
+            array_map(
+                function ($answer) {
+                    return $answer['points'];
+                },
+                $data['answers']
+            )
+        );
+
+        return (int)count($data['questions']) * (int)$maxAnswer;
     }
 }

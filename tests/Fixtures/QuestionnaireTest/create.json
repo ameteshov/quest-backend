@@ -1,18 +1,14 @@
 {
     "name": "Agile test",
-    "content": [
-        {
-            "text": "How can you review your flexibility from 1 to 5?",
-            "from": 1,
-            "to": 5
-        },
-        {
-            "text": "How can you review your availability from 1 to 8?",
-            "from": 1,
-            "to": 8
-        }
-    ],
-    "result_type": "avg",
+    "content": {
+        "questions": [
+            {"text":  "first"}
+        ],
+        "answers": [
+            {"text":  "one", "points": 2},
+            {"text":  "two", "points": 4}
+        ]
+    },
     "success_score": 6,
     "description": "some text",
     "type_id": null

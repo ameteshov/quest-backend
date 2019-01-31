@@ -79,8 +79,11 @@ class QuestionnaireController extends Controller
 
     public function getStatistic(Request $request, QuestionnaireService $service)
     {
-        $entity = $service->getStatistic($request->user()->id);
+        $result = $service->getStatistic(
+            $request->user()->id,
+            $request->input('vacancies', [])
+        );
 
-        return response()->json($entity);
+        return response()->json($result);
     }
 }

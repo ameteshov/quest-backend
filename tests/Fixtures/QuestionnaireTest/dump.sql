@@ -1,6 +1,6 @@
-INSERT INTO questionnaires(id, name, description, success_score, content, type_id, is_active, created_at, updated_at)
+INSERT INTO questionnaires(id, name, description, success_score, max_score, content, type_id, is_active, created_at, updated_at)
     VALUES
-(5, 'intellect test', 'some words', 20,
+(5, 'intellect test', 'some words', 20, 30,
     '{"questions":[
         {"text": "some text 1"},
         {"text": "some text 2"},
@@ -18,7 +18,7 @@ INSERT INTO questionnaires(id, name, description, success_score, content, type_i
         ]
     }', 1, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
 
-(6, 'agility test',   'some words', 33,
+(6, 'agility test',   'some words', 33, 42,
     '{"questions":[
         {"text": "some text 1"},
         {"text": "some text 2"},
@@ -36,7 +36,7 @@ INSERT INTO questionnaires(id, name, description, success_score, content, type_i
         ]
     }', 2, 1, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
 
-(7, 'spirit test',    'some words', 108,
+(7, 'spirit test',    'some words', 108, 150,
     '{"questions":[
         {"text": "some text 1"},
         {"text": "some text 2"},

@@ -70,9 +70,9 @@ class QuestionnaireService extends Service
         return $this->repository->exists($where);
     }
 
-    public function getStatistic(int $userId)
+    public function getStatistic(int $userId, $vacancies = [])
     {
-        return $this->resultsRepository->getStatisticForUser($userId);
+        return $this->resultsRepository->getStatisticForUser($userId, $vacancies);
     }
 
     protected function sendToRecipient($id, $senderId, array $recipientData)
@@ -85,6 +85,7 @@ class QuestionnaireService extends Service
             'user_id' => $senderId,
             'email' => $recipientData['email'],
             'recipient_name' => $recipientData['name'],
+            'vacancy' => $recipientData['vacancy'],
             'access_hash' => $accessHash,
             'expired_at' => Carbon::now()->addHour(config('defaults.forms.ttl'))->toDateTimeString()
         ]);

@@ -10,7 +10,7 @@ class QuestionnaireResult extends Model
         'content', 'email', 'recipient_name',
         'access_hash', 'is_passed', 'questionnaire_id',
         'user_id', 'score', 'recipient_phone', 'expired_at',
-        'birthday_date'
+        'birthday_date', 'vacancy'
     ];
 
     protected $casts = ['content' => 'array'];

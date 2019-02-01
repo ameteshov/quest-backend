@@ -38,6 +38,7 @@ class QuestionnaireResultRepository extends Repository
             ->addSelect(DB::raw('sum(questionnaires.max_score) as score_max'))
             ->addSelect(['email', 'recipient_name', 'vacancy'])
             ->where('questionnaires_results.user_id', $userId)
+            ->where('questionnaires_results.is_passed', true)
             ->whereHas('questionnaire', function ($query) {
                 $query->whereNotNull('questionnaires.type_id');
             })
@@ -53,6 +54,42 @@ class QuestionnaireResultRepository extends Repository
         }
 
         $result = $query->get()->toArray();
+
+        return $result ?? [];
+    }
+
+    public function getVacancies(int $userId)
+    {
+        $result = $this->getQuery()
+            ->addSelect('vacancy')
+            ->where('user_id', $userId)
+            ->where('is_passed', true)
+            ->distinct()
+            ->get()
+            ->toArray();
+
+        return $result ?? [];
+    }
+
+    public function getCandidate(int $userId, string $email)
+    {
+        $fieldList = [
+            'questionnaires_results.recipient_name', 'questionnaires_results.recipient_phone', 'questionnaires_results.email',
+            'questionnaires_results.id', 'questionnaires_results.score',
+            'questionnaires.type_id', 'questionnaires.max_score', 'questionnaires.name'
+        ];
+
+        $result = $this->getQuery()
+            ->where('questionnaires_results.user_id', $userId)
+            ->where('questionnaires_results.email', $email)
+            ->join('questionnaires', 'questionnaires_results.questionnaire_id', '=', 'questionnaires.id')
+            ->select($fieldList)
+            ->groupBy($fieldList)
+            ->addSelect(DB::raw('sum(questionnaires_results.score) as score_sum'))
+            ->addSelect(DB::raw('sum(questionnaires.max_score) as max_score_sum'))
+            ->orderBy('questionnaires.type_id')
+            ->get()
+            ->toArray();
 
         return $result ?? [];
     }

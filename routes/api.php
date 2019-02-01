@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\{
     AuthController, QuestionnaireController, UserController, PaymentController,
-    PlanController, QuestionnaireTypeController, SocialAuthController
+    PlanController, QuestionnaireTypeController, SocialAuthController,
+    QuestionnaireResultController
 };
 
 /*
@@ -45,8 +46,10 @@ Route::middleware($authGroup)->group(function () {
     Route::delete('questionnaires/{id}', QuestionnaireController::class.'@delete')->where('id', '[0-9]+');
     Route::put('questionnaires/{id}', QuestionnaireController::class.'@update')->where('id', '[0-9]+');
 
-    Route::get('questionnaires/results/vacancies', QuestionnaireController::class.'@getResultsVacancies');
     Route::get('questionnaires/statistic', QuestionnaireController::class.'@getStatistic');
+
+    Route::get('questionnaire-results/vacancies', QuestionnaireResultController::class.'@getVacancies');
+    Route::get('questionnaire-results', QuestionnaireResultController::class.'@getCandidate');
 
     Route::post('questionnaires/{id}/send', QuestionnaireController::class.'@send')->where('id', '[0-9]+');
 

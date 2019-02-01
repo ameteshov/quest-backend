@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Request\ConfirmPasswordRequest;
 use App\Request\LoginRequest;
+use App\Request\LoginSocialRequest;
 use App\Request\RegisterRequest;
 use App\Request\ResetPasswordRequest;
 use App\Service\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Laravel\Socialite\Facades\Socialite;
 use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
@@ -56,5 +59,26 @@ class AuthController extends Controller
         $userService->confirmPassword($request->all());
 
         return \response()->json('', Response::HTTP_NO_CONTENT);
+    }
+
+    public function socialLogin(LoginSocialRequest $request, $provider)
+    {
+        return response()->json([
+            'url' => Socialite::driver($provider)->stateless()->redirect()->getTargetUrl()
+        ]);
+    }
+
+    public function googleLoginCallback(Request $request, UserService $service, JWTAuth $auth)
+    {
+        $token = $service->createOrLoginFormSocial(Socialite::driver('google')->stateless()->user(), 'google');
+
+        return redirect(config('frontend_url') . "/complete-auth?token={$token}");
+    }
+
+    public function vkLoginCallback(Request $request, UserService $service, JWTAuth $auth)
+    {
+        $token = $service->createOrLoginFormSocial(Socialite::driver('vkontakte')->stateless()->user(), 'vkontakte');
+
+        return redirect(config('frontend_url') . "/complete-auth?token={$token}");
     }
 }

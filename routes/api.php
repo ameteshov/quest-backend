@@ -31,8 +31,9 @@ Route::middleware($guestGroup)->group(function () {
 
     Route::post('payments/webhooks', PaymentController::class.'@handle');
 
-    Route::get('social-login/google', SocialAuthController::class.'@googleLogin');
-    Route::get('social-login/google-plus-callback', SocialAuthController::class.'@googleLoginCallback');
+    Route::get('social-login/callbacks/google', AuthController::class.'@googleLoginCallback');
+    Route::get('social-login/callbacks/vk', AuthController::class.'@vkLoginCallback');
+    Route::get('social-login/{provider}', AuthController::class.'@socialLogin');
 });
 
 Route::get('/auth/refresh', function() {
@@ -48,6 +49,7 @@ Route::middleware($authGroup)->group(function () {
 
     Route::get('questionnaires/statistic', QuestionnaireController::class.'@getStatistic');
 
+    Route::get('questionnaire-results/{id}', QuestionnaireResultController::class.'@get')->where('id', '[0-9]+');
     Route::get('questionnaire-results/vacancies', QuestionnaireResultController::class.'@getVacancies');
     Route::get('questionnaire-results', QuestionnaireResultController::class.'@getCandidate');
 

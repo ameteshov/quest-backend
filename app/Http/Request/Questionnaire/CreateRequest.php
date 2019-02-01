@@ -20,9 +20,9 @@ class CreateRequest extends Request
             'content' => 'required|array',
             'content.questions' => 'required|array',
             'content.questions.*.text' => 'required|string',
-            'content.answers' => 'required|array',
-            'content.answers.*.text' => 'required|string',
-            'content.answers.*.points' => 'required|numeric',
+            'content.answers' => 'required_with:type_id|array',
+            'content.answers.*.text' => 'required_with:type_id|string',
+            'content.answers.*.points' => 'required_with:type_id|numeric',
             'success_score' => 'integer',
             'type_id' => 'integer|nullable|exists:questionnaire_types,id',
             'description' => 'string'

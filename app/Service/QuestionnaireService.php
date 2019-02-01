@@ -113,6 +113,10 @@ class QuestionnaireService extends Service
 
     protected function calculateMaxScore(array $data)
     {
+        if (!array_has($data, 'answers')) {
+            return null;
+        }
+        
         $maxAnswer = max(
             array_map(
                 function ($answer) {

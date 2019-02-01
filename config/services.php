@@ -43,7 +43,13 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://localhost:80/social-login/google-plus-callback',
+        'redirect' => 'http://localhost:80/social-login/callbacks/google',
+    ],
+
+    'vkontakte' => [
+        'client_id' => '6842572',
+        'client_secret' => 'IVW9EuNEMgDtRASdlhBS',
+        'redirect' => 'http://localhost:80/social-login/callbacks/vk'
     ],
 
 ];

@@ -87,7 +87,7 @@ class QuestionnaireResultRepository extends Repository
             ->groupBy($fieldList)
             ->addSelect(DB::raw('sum(questionnaires_results.score) as score_sum'))
             ->addSelect(DB::raw('sum(questionnaires.max_score) as max_score_sum'))
-            ->orderBy('questionnaires.type_id')
+            ->orderBy('questionnaires.type_id', 'desc')
             ->get()
             ->toArray();
 

@@ -36,6 +36,17 @@ class UserRepository extends Repository
         $query->decrement('points');
     }
 
+    public function findBySocialId($socialId)
+    {
+        return $this->getQuery()
+            ->where(function($query) use ($socialId) {
+                $query->orWhere('google_id', $socialId)
+                    ->orWhere('vk_id', $socialId)
+                    ->orWhere('facebook_id', $socialId);
+            })
+            ->first();
+    }
+
     protected function filterByCurrentUser(): ModelRepositoryInterface
     {
         if (array_has($this->filters, 'current_user_id')) {

@@ -32,7 +32,27 @@ class QuestionnaireResultTest extends TestCase
     {
         $data = [
             'email' => 'vasya@mail.test',
-            'name' => 'vasya ignatiy'
+            'name' => 'vasya ignatiy',
+        ];
+
+        $response = $this->actingAs($this->userAbleSend)->json('post', '/questionnaires/1/send', [
+            'list' => [$data]
+        ]);
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $this->assertDatabaseHas('questionnaires_results', [
+            'email' => $data['email'],
+            'recipient_name' => $data['name'],
+            'questionnaire_id' => 1
+        ]);
+    }
+
+    public function testSendCheckVacancyIdentityValidator()
+    {
+        $data = [
+            'email' => 'some.email@recipient.no',
+            'name' => 'vasya ignatiy',
+            'vacancy' => 'shit'
         ];
 
         $response = $this->actingAs($this->userAbleSend)->json('post', '/questionnaires/1/send', [

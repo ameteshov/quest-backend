@@ -29,11 +29,12 @@ INSERT INTO plans(id, name, price, points, type, description, is_active, created
 (4, 'premium', 100, 500, 'purchase', '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00'),
 (5, 'subscription', 600, 500, 'subscription', '["line 1", "line 2"]', true, '2018-12-01 16:00:00', '2018-12-01 16:00:00');
 
-INSERT INTO questionnaires_results(id, content, email, recipient_name, score, access_hash, is_passed, questionnaire_id, user_id, expired_at)
+INSERT INTO questionnaires_results(id, content, email, recipient_name, vacancy, score, access_hash, is_passed, questionnaire_id, user_id, expired_at)
     VALUES
-(1, '[]', 'some.email@recipient.no', 'first', 10, 'qwerty', true, 1, 2, '2018-12-01 16:00:00'),
-(2, '[]', 'some.email@recipient.no', 'second', 9, 'qwertyqwe', true, 1, 3, '2018-12-01 16:00:00'),
-(3, '[]', 'some.email@recipient.no', 'third', null, 'qwertyreqre', false, 1, 3, '2018-12-01 16:00:00');
+(1, '[]', 'some.email@recipient.no', 'first', 'one', 10, 'qwerty', true, 1, 2, '2018-12-01 16:00:00'),
+(2, '[]', 'some.email@recipient.no', 'second', 'one', 9, 'qwertyqwe', true, 1, 3, '2018-12-01 16:00:00'),
+(3, '[]', 'some.email@recipient.no', 'third', 'one', null, 'qwertyreqre', false, 1, 3, '2018-12-01 16:00:00'),
+(4, '[]', 'some.email@recipient.no', 'forth', 'one', null, 'qwertyreqree', false, 1, 4, '2018-12-01 16:00:00');
 
 INSERT INTO payments(id, user_id, payment_id, plan_id, is_paid, status, amount, currency, description, started_at, created_at, updated_at)
     VALUES

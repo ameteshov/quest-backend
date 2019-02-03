@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Request\User\DeleteRequest;
+use App\Request\User\GetProfileRequest;
 use App\Request\User\GetRequest;
 use App\Request\User\SearchRequest;
 use App\Request\User\UpdateRequest;
@@ -23,6 +24,13 @@ class UserController extends Controller
     public function get(GetRequest $request, UserService $service, int $id): JsonResponse
     {
         $user = $service->find($id);
+
+        return response()->json($user);
+    }
+
+    public function getProfile(GetProfileRequest $request, UserService $service): JsonResponse
+    {
+        $user = $service->find($request->user()->id);
 
         return response()->json($user);
     }

@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Model\Role;
+use App\Service\QuestionnaireResultService;
 use App\Support\Interfaces\PaymentClientInterface;
 use App\Util\YandexPaymentClient;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

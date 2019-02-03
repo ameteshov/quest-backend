@@ -1,6 +1,3 @@
-Your password were reset.
-
-url: {{ env('FRONTEND_URL') . '/confirm?token=' . $data['reset_token'] }}
 @extends('emails.template')
 @section('content')
     <div style="Margin-left: 20px;Margin-right: 20px;Margin-top: 24px;">

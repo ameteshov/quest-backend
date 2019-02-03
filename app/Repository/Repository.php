@@ -33,11 +33,11 @@ class Repository implements ModelRepositoryInterface
         return empty($entity) ? [] : $entity->toArray();
     }
 
-    public function create(array $entityData): array
+    public function create(array $entityData, $hydrationArray = true): array
     {
         $entity = new $this->model;
 
-        return $this->persist($entity, $entityData, true);
+        return $this->persist($entity, $entityData, true, $hydrationArray);
     }
 
     public function update(int $id, array $data, $force = false): array
@@ -47,11 +47,11 @@ class Repository implements ModelRepositoryInterface
         return $this->persist($entity, $data, $force);
     }
 
-    public function updateBy(array $where, array $data): array
+    public function updateBy(array $where, array $data, bool $force = false): array
     {
         $entity = $this->first($where);
 
-        return $this->persist($entity, $data);
+        return $this->persist($entity, $data, $force);
     }
 
     public function updateMany(array $where, array $data): void

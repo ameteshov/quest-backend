@@ -6,7 +6,6 @@ use App\Request\QuestionnaireResult\GetCandidateRequest;
 use App\Request\QuestionnaireResult\GetRequest;
 use App\Request\QuestionnaireResult\GetVacanciesRequest;
 use App\Service\QuestionnaireResultService;
-use App\Service\QuestionnaireService;
 
 class QuestionnaireResultController extends Controller
 {

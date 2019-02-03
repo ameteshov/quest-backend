@@ -55,10 +55,25 @@ class UserService extends Service
     public function createOrLoginFormSocial($user, string $provider)
     {
         $authService = app(JWTAuth::class);
-        $userObject = $this->repository->findBy(['email' => $user->getEmail()]);
+        $userObject = $this->repository->findBySocialId($user->getId());
+        $userData = [];
 
-        if (!empty($user)) {
+        if (!empty($userObject)) {
             return $authService->fromUser($userObject);
+        }
+
+        switch ($provider) {
+            case 'google':
+                $userData['google_id'] = $user->getId();
+                break;
+            case 'vkontakte':
+                $userData['vk_id'] = $user->getId();
+                break;
+            case 'facebook':
+                $userData['facebook_id'] = $user->getId();
+                break;
+            default:
+                break;
         }
 
         $userData['name'] = $user->getName();
@@ -66,7 +81,7 @@ class UserService extends Service
         $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
         $userData['points'] = config('defaults.free_plan.points');
 
-        $createdUser = $this->repository->create($userData);
+        $createdUser = $this->repository->create($userData, false);
 
         return $authService->fromUser($createdUser);
     }
@@ -95,7 +110,7 @@ class UserService extends Service
             'reset_token' => null
         ];
 
-        $this->repository->updateBy(['reset_token' => $userData['hash']], $data);
+        $this->repository->updateBy(['reset_token' => $userData['hash']], $data, true);
     }
 
     public function search(int $currentUserId, ?array $filters = []): array

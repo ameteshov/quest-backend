@@ -13,9 +13,12 @@ class User extends Authenticatable
         'name', 'email', 'password'
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'vk_id', 'google_id', 'facebook_id'];
 
-    protected $guarded = ['questionnaires_count', 'is_active', 'reset_token', 'role_id', 'points', 'plan_id', 'subscribed_before'];
+    protected $guarded = [
+        'questionnaires_count', 'is_active', 'reset_token', 'role_id', 'points', 'plan_id', 'subscribed_before',
+        'vk_id', 'google_id', 'facebook_id'
+    ];
 
     public function role()
     {

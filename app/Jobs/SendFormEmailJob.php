@@ -8,7 +8,7 @@ class SendFormEmailJob extends SendEmailJob
     {
         parent::__construct(
             'emails.form',
-            'noreply',
+            trans('email.form.subject'),
             config('defaults.emails.support'),
             $to,
             $data

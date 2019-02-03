@@ -72,13 +72,20 @@ class AuthController extends Controller
     {
         $token = $service->createOrLoginFormSocial(Socialite::driver('google')->stateless()->user(), 'google');
 
-        return redirect(config('frontend_url') . "/complete-auth?token={$token}");
+        return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");
     }
 
     public function vkLoginCallback(Request $request, UserService $service, JWTAuth $auth)
     {
         $token = $service->createOrLoginFormSocial(Socialite::driver('vkontakte')->stateless()->user(), 'vkontakte');
 
-        return redirect(config('frontend_url') . "/complete-auth?token={$token}");
+        return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");
+    }
+
+    public function facebookLoginCallback(Request $request, UserService $service, JWTAuth $auth)
+    {
+        $token = $service->createOrLoginFormSocial(Socialite::driver('facebook')->stateless()->user(), 'facebook');
+
+        return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");
     }
 }

@@ -60,6 +60,7 @@ Route::middleware($authGroup)->group(function () {
     Route::get('users/{id}', UserController::class.'@get')->where('id', '[0-9]+');
     Route::delete('users/{id}', UserController::class.'@delete')->where('id', '[0-9]+');
     Route::put('users/{id}', UserController::class.'@update')->where('id', '[0-9]+');
+    Route::get('users/profile', UserController::class.'@getProfile');
 
     Route::post('plans', PlanController::class.'@create');
     Route::get('plans', PlanController::class.'@search');

@@ -27,16 +27,10 @@ class SendEmailJob implements ShouldQueue
         $this->from = $from;
         $this->to = $to;
         $this->subject = $subject;
-
-        $this->data['locale'] = session('lang');
     }
 
     public function handle()
     {
-        if (!empty($this->data['locale'])) {
-            App::setLocale($this->data['locale']);
-        }
-
         Mail::send($this->template, $this->data, function ($m) {
             $m->from($this->from, $this->subject);
             $m->to($this->to)->subject($this->subject);

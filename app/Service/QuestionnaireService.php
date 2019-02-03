@@ -81,14 +81,29 @@ class QuestionnaireService extends Service
 
         $accessHash = md5(uniqid('', true));
 
-        $this->repository->addRecipient($id, [
+        $result = $this->resultsRepository->findBy([
             'user_id' => $senderId,
             'email' => $recipientData['email'],
-            'recipient_name' => $recipientData['name'],
-            'vacancy' => $recipientData['vacancy'],
-            'access_hash' => $accessHash,
-            'expired_at' => Carbon::now()->addHour(config('defaults.forms.ttl'))->toDateTimeString()
         ]);
+
+        if (!empty($result)) {
+            $this->resultsRepository->update($result['id'], [
+                'access_hash' => $accessHash,
+                'expired_at' => Carbon::now()->addHour(config('defaults.forms.ttl'))->toDateTimeString(),
+                'content' => null,
+                'recipient_name' => $recipientData['name'],
+                'vacancy' => strtolower($recipientData['vacancy'])
+            ]);
+        } else {
+            $this->repository->addRecipient($id, [
+                'user_id' => $senderId,
+                'email' => $recipientData['email'],
+                'recipient_name' => $recipientData['name'],
+                'vacancy' => strtolower($recipientData['vacancy']),
+                'access_hash' => $accessHash,
+                'expired_at' => Carbon::now()->addHour(config('defaults.forms.ttl'))->toDateTimeString()
+            ]);
+        }
 
         if (!$userService->hasActiveSubscription($senderId)) {
             $this->userRepository->updateSendCount($senderId);

@@ -50,7 +50,9 @@ class QuestionnaireResultRepository extends Repository
             ->orderBy('score_sum', 'desc');
 
         if ([] !== $vacancies) {
-            $query->whereIn('vacancy', $vacancies);
+            $query->whereIn('vacancy', array_map(function ($item) {
+                return strtolower($item);
+            }, $vacancies));
         }
 
         $result = $query->get()->toArray();
@@ -63,7 +65,6 @@ class QuestionnaireResultRepository extends Repository
         $result = $this->getQuery()
             ->addSelect('vacancy')
             ->where('user_id', $userId)
-            ->where('is_passed', true)
             ->distinct()
             ->get()
             ->toArray();

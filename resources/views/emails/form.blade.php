@@ -6,7 +6,7 @@
 
     <div style="Margin-left: 20px;Margin-right: 20px;">
         <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-            <h1 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #565656;font-size: 30px;line-height: 38px;text-align: center;"><strong>@lang('form.subject')</strong></h1><p style="Margin-top: 20px;Margin-bottom: 0;">&nbsp;<br />
+            <h1 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #565656;font-size: 30px;line-height: 38px;text-align: center;"><strong>@lang('email.form.subject')</strong></h1><p style="Margin-top: 20px;Margin-bottom: 0;">&nbsp;<br />
                 {{$name}}, добрый день!
             <p style="Margin-top: 20px;Margin-bottom: 20px;">
                 Мы получили и уже передали руководителю вашу анкету на вакансию. Мы приглашаем вас пройти заключительный этап перед собеседованием.

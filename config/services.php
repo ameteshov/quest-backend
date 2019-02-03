@@ -43,13 +43,19 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://localhost:80/social-login/callbacks/google',
+        'redirect' => env('GOOGLE_REDIRECT'),
     ],
 
     'vkontakte' => [
-        'client_id' => '6842572',
-        'client_secret' => 'IVW9EuNEMgDtRASdlhBS',
-        'redirect' => 'http://localhost:80/social-login/callbacks/vk'
+        'client_id' => env('VK_CLIENT_ID'),
+        'client_secret' => env('VK_CLIENT_SECRET'),
+        'redirect' => env('VK_REDIRECT')
+    ],
+
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT')
     ],
 
 ];

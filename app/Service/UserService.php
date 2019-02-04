@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Jobs\SendRegistrationEmailJob;
 use App\Jobs\SendResetPasswordEmailJob;
 use App\Model\Role;
+use App\Model\User;
 use App\Repository\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Hashing\Hasher;
@@ -76,14 +77,23 @@ class UserService extends Service
                 break;
         }
 
-        $userData['name'] = $user->getName();
-        $userData['email'] = $user->getEmail();
-        $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
-        $userData['points'] = config('defaults.free_plan.points');
+        if (!empty($user->getEmail()) && $this->repository->exists(['email' => $user->getEmail()])) {
+            $updatedUser = $this->repository->updateBy(
+                ['email' => $user->getEmail()],
+                $userData,
+                true
+            );
 
-        $createdUser = $this->repository->create($userData, false);
+            return $authService->fromUser(User::find($updatedUser['id']));
+        } else {
+            $userData['name'] = $user->getName();
+            $userData['email'] = $user->getEmail();
+            $userData['role_id'] = $userData['role_id'] ?? Role::DEFAULT_ROLE;
+            $userData['points'] = config('defaults.free_plan.points');
 
-        return $authService->fromUser($createdUser);
+            $createdUser = $this->repository->create($userData, false);
+            return $authService->fromUser($createdUser);
+        }
     }
 
     public function update(int $id, array $data, int $role): void

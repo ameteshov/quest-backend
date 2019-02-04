@@ -25,14 +25,14 @@ class UserService extends Service
         $this->hasher = app(Hasher::class);
     }
 
-    public function create(array $userData): array
+    public function create(array $userData, $hydrationArray = true)
     {
         $userData['password'] = $this->hasher->make($userData['password']);
         $userData['role_id'] = Role::DEFAULT_ROLE;
         $userData['questionnaires_count'] = config('defaults.free_plan.points');
         $userData['points'] = config('defaults.free_plan.points');
 
-        $user = $this->repository->create($userData);
+        $user = $this->repository->create($userData, $hydrationArray);
 
         dispatch(new SendRegistrationEmailJob($user['email'], ['data' => $user]));
 

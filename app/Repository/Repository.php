@@ -33,7 +33,7 @@ class Repository implements ModelRepositoryInterface
         return empty($entity) ? [] : $entity->toArray();
     }
 
-    public function create(array $entityData, $hydrationArray = true): array
+    public function create(array $entityData, $hydrationArray = true)
     {
         $entity = new $this->model;
 

@@ -40,11 +40,18 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(RegisterRequest $request, UserService $userService)
+    public function register(RegisterRequest $request, UserService $userService, JWTAuth $auth)
     {
-        $userService->create($request->except(['confirm']));
+        $user = $userService->create($request->except(['confirm']), false);
 
-        return \response()->json('', Response::HTTP_OK);
+        $token = $auth->fromUser($user);
+
+        return response()->json([
+            'user' => $user->toArray(),
+            'token' => $token,
+            'ttl' => config('jwt.ttl'),
+            'refresh_ttl' => config('jwt.refresh_ttl')
+        ]);
     }
 
     public function resetPassword(ResetPasswordRequest $request, UserService $userService)

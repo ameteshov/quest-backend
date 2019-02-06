@@ -61,7 +61,7 @@ class YandexPaymentClient implements PaymentClientInterface
             ],
             'confirmation' => [
                 'type' => 'redirect',
-                'return_url' => config('defaults.checkout.return_url')
+                'return_url' => config('defaults.checkout.return_url') . array_get($paymentData, 'return_url_slug')
             ],
             'description' => array_get($paymentData, 'description'),
             'capture' => true

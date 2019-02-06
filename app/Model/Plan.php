@@ -8,7 +8,7 @@ class Plan extends Model
     public const SUB_TYPE = 'subscription';
 
     protected $fillable = [
-        'id', 'name', 'price', 'points', 'is_active', 'description', 'type'
+        'id', 'name', 'price', 'points', 'is_active', 'description', 'type', 'slug'
     ];
 
     protected $hidden = [

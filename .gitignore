@@ -16,3 +16,4 @@ yarn-error.log
 .phpunit.result.cache
 .access
 /docker/mysql/lib/*
+/docker/mysql/dump/*

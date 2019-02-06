@@ -14,7 +14,7 @@ class QuestionnaireRepository extends Repository
     public function search(?array $filters = [])
     {
         return $this->getSearchQuery($filters)
-            ->filterBy('user_id')
+            ->filterForUser()
             ->with()
             ->getResult();
     }
@@ -57,5 +57,19 @@ class QuestionnaireRepository extends Repository
         return function ($query) use ($hash) {
             $query->where('access_hash', $hash);
         };
+    }
+
+    protected function filterForUser()
+    {
+        if (!empty($this->filters['user_id'])) {
+            $userId = $this->filters['user_id'];
+            $this->searchQuery->where(function ($query) use ($userId) {
+                $query
+                    ->orWhere('user_id', $userId)
+                    ->orWhereNull('user_id');
+            });
+        }
+
+        return $this;
     }
 }

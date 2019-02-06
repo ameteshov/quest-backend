@@ -14,6 +14,7 @@ class QuestionnaireRepository extends Repository
     public function search(?array $filters = [])
     {
         return $this->getSearchQuery($filters)
+            ->filterBy('user_id')
             ->with()
             ->getResult();
     }

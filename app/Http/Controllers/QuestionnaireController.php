@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Role;
 use App\Request\Questionnaire\{CreateRequest,
     DeleteRequest,
     GetByHashRequest,
@@ -51,7 +52,13 @@ class QuestionnaireController extends Controller
 
     public function search(SearchRequest $request, QuestionnaireService $service)
     {
-        $result = $service->search($request->all());
+        $filters = $request->all();
+
+        if (Role::ROLE_USER === $request->user()->role_id) {
+            $filters['user_id'] = $request->user()->id;
+        }
+
+        $result = $service->search($filters);
 
         return response()->json($result);
     }

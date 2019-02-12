@@ -12,7 +12,7 @@ return [
         'merchant_token' => env('MERCHANT_TOKEN'),
         'default_currency' => env('CHECKOUT_CURRENCY', 'RUB'),
         'default_locale' => env('CHECKOUT_LOCALE', 'ru'),
-        'return_url' => env('CHECKOUT_RETURN_URL', env('FRONTEND_URL') . '/panel/payments/finished')
+        'return_url' => env('CHECKOUT_RETURN_URL', env('FRONTEND_URL') . '/panel/payments/finished/')
     ],
     'forms' => [
         'ttl' => env('FORMS_TTL', 48) // in hours

@@ -43,12 +43,14 @@ class PaymentTransactionService extends Service
 
             return [
                 'amount' => $plan['price'],
+                'return_url_slug' => $plan['slug'],
                 'idempotent_key' => $transaction['token']
             ];
         }
 
         return [
             'amount' => array_get($transaction, 'plan.price'),
+            'return_url_slug' => array_get($transaction, 'plan.slug'),
             'idempotent_key' => array_get($transaction, 'token')
         ];
     }
@@ -56,5 +58,10 @@ class PaymentTransactionService extends Service
     public function finish(int $userId): void
     {
         $this->repository->delete(['user_id' => $userId]);
+    }
+
+    public function rollback(string $token)
+    {
+        $this->repository->delete(['token' => $token]);
     }
 }

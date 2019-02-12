@@ -51,7 +51,7 @@ class QuestionnaireResultRepository extends Repository
 
         if ([] !== $vacancies) {
             $query->whereIn('vacancy', array_map(function ($item) {
-                return strtolower($item);
+                return mb_strtolower($item);
             }, $vacancies));
         }
 

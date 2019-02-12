@@ -33,6 +33,10 @@ Route::middleware($guestGroup)->group(function () {
 
     Route::get('social-login/callbacks/google', AuthController::class.'@googleLoginCallback');
     Route::get('social-login/callbacks/vk', AuthController::class.'@vkLoginCallback');
+    Route::get('social-login/callbacks/facebook', AuthController::class.'@facebookLoginCallback');
+    Route::get('social-login/callbacks/twitter', AuthController::class.'@twitterLoginCallback');
+    Route::get('social-login/callbacks/odnoklassniki', AuthController::class.'@odnoklassnikiLoginCallback');
+
     Route::get('social-login/{provider}', AuthController::class.'@socialLogin');
 });
 

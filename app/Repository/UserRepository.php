@@ -42,7 +42,9 @@ class UserRepository extends Repository
             ->where(function($query) use ($socialId) {
                 $query->orWhere('google_id', $socialId)
                     ->orWhere('vk_id', $socialId)
-                    ->orWhere('facebook_id', $socialId);
+                    ->orWhere('facebook_id', $socialId)
+                    ->orWhere('twitter_id', $socialId)
+                    ->orWhere('odnoklassniki_id', $socialId);
             })
             ->first();
     }

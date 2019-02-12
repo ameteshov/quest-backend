@@ -73,6 +73,12 @@ class UserService extends Service
             case 'facebook':
                 $userData['facebook_id'] = $user->getId();
                 break;
+            case 'twitter':
+                $userData['twitter_id'] = $user->getId();
+                break;
+            case 'odnoklassniki':
+                $userData['odnoklassniki_id'] = $user->getId();
+                break;
             default:
                 break;
         }

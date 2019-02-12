@@ -11,7 +11,7 @@ class PaymentController extends Controller
 {
     public function create(CreateRequest $request, PaymentService $service)
     {
-        $result = $service->create($request->user()->id, $request->input('plan_id'));
+        $result = $service->create($request->user()->id, $request->input('plan_id'), $request->input('method'));
 
         return response()->json($result);
     }

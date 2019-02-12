@@ -36,9 +36,10 @@ class PaymentService extends Service
         $this->paymentTransactionService = app(PaymentTransactionService::class);
     }
 
-    public function create(int $userId, int $planId)
+    public function create(int $userId, int $planId, string $method)
     {
         $paymentData = $this->paymentTransactionService->begin($userId, $planId);
+        $paymentData['method'] = $method;
 
         try {
             $payment = $this->paymentClient->create($paymentData);

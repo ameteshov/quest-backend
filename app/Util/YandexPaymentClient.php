@@ -102,6 +102,8 @@ class YandexPaymentClient implements PaymentClientInterface
                 ]
             ];
         }
+
+        return $result;
     }
 
     protected function transformApiResponse(CreatePaymentResponse $response): array

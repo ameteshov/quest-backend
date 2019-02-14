@@ -8,6 +8,7 @@ use App\Request\LoginSocialRequest;
 use App\Request\RegisterRequest;
 use App\Request\ResetPasswordRequest;
 use App\Service\UserService;
+use App\Util\OdnoklassnikiProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
@@ -68,11 +69,15 @@ class AuthController extends Controller
         return \response()->json('', Response::HTTP_NO_CONTENT);
     }
 
-    public function socialLogin(LoginSocialRequest $request, $provider)
+    public function socialLogin(LoginSocialRequest $request, OdnoklassnikiProvider $odnoklassnikiProvider, $provider)
     {
-        return response()->json([
-            'url' => Socialite::driver($provider)->stateless()->redirect()->getTargetUrl()
-        ]);
+        if ('odnoklassniki' === $provider) {
+            $url = $odnoklassnikiProvider->getRedirectUrl();
+        } else {
+            $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
+        }
+
+        return response()->json(['url' => $url]);
     }
 
     public function googleLoginCallback(Request $request, UserService $service, JWTAuth $auth)
@@ -103,8 +108,10 @@ class AuthController extends Controller
         return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");
     }
 
-    public function odnoklassnikiLoginCallback(Request $request, UserService $service, JWTAuth $auth)
+    public function odnoklassnikiLoginCallback(Request $request, UserService $service, OdnoklassnikiProvider $provider, JWTAuth $auth)
     {
+        $user = $provider->getUser($request->input('code'));
+
         $token = $service->createOrLoginFormSocial(Socialite::driver('facebook')->stateless()->user(), 'facebook');
 
         return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");

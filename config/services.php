@@ -58,4 +58,15 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT')
     ],
 
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => env('TWITTER_REDIRECT')
+    ],
+
+    'odnoklassniki' => [
+        'client_id' => env('ODNOKLASSNIKI_CLIENT_ID'),
+        'client_secret' => env('ODNOKLASSNIKI_CLIENT_SECRET'),
+        'redirect' => env('ODNOKLASSNIKI_REDIRECT')
+    ]
 ];

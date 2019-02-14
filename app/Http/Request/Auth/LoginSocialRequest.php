@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class LoginSocialRequest extends Request
 {
-    protected $availableProviders = ['vkontakte', 'google'];
+    protected $availableProviders = ['vkontakte', 'google', 'twitter', 'facebook', 'odnoklassniki'];
 
     public function authorize()
     {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "289c527b8d90767ceb0e221125f69be5",
+    "content-hash": "c9886ef9f6b13f28f36ee9852ee5be51",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -981,6 +981,43 @@
             ],
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "jhaoda/socialite-odnoklassniki",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jhaoda/socialite-odnoklassniki.git",
+                "reference": "a0db5802e97835b8138df5242b0ca72bd2f3ebcb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jhaoda/socialite-odnoklassniki/zipball/a0db5802e97835b8138df5242b0ca72bd2f3ebcb",
+                "reference": "a0db5802e97835b8138df5242b0ca72bd2f3ebcb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JhaoDa\\SocialiteProviders\\Odnoklassniki\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "JhaoDa",
+                    "email": "jhaoda@gmail.com"
+                }
+            ],
+            "description": "Odnoklassniki OAuth2 Provider for Laravel Socialite",
+            "time": "2017-05-17T12:09:23+00:00"
         },
         {
             "name": "laravel/framework",

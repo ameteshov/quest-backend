@@ -12,6 +12,7 @@
         "barryvdh/laravel-cors": "^0.11.2",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "jhaoda/socialite-odnoklassniki": "^3.0",
         "laravel/framework": "5.7.*",
         "laravel/socialite": "^4.0",
         "laravel/tinker": "^1.0",

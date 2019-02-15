@@ -17,7 +17,7 @@ class User extends Authenticatable
 
     protected $guarded = [
         'questionnaires_count', 'is_active', 'reset_token', 'role_id', 'points', 'plan_id', 'subscribed_before',
-        'vk_id', 'google_id', 'facebook_id'
+        'vk_id', 'google_id', 'facebook_id', 'twitter_id', 'odnoklassniki_id'
     ];
 
     public function role()

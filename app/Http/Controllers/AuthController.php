@@ -110,9 +110,7 @@ class AuthController extends Controller
 
     public function odnoklassnikiLoginCallback(Request $request, UserService $service, OdnoklassnikiProvider $provider, JWTAuth $auth)
     {
-        $user = $provider->getUser($request->input('code'));
-
-        $token = $service->createOrLoginFormSocial(Socialite::driver('facebook')->stateless()->user(), 'facebook');
+        $token = $service->createOrLoginFormSocial(Socialite::driver('odnoklassniki')->stateless()->user(), 'odnoklassniki');
 
         return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");
     }

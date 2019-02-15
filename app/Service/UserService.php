@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Hashing\Hasher;
 use Tymon\JWTAuth\JWTAuth;
+use Laravel\Socialite\Contracts\User as SocialUserInterface;
 
 /**
  * @property UserRepository $repository
@@ -53,7 +54,7 @@ class UserService extends Service
         return $user;
     }
 
-    public function createOrLoginFormSocial($user, string $provider)
+    public function createOrLoginFormSocial(SocialUserInterface $user, string $provider)
     {
         $authService = app(JWTAuth::class);
         $userObject = $this->repository->findBySocialId($user->getId());

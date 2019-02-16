@@ -69,15 +69,9 @@ class AuthController extends Controller
         return \response()->json('', Response::HTTP_NO_CONTENT);
     }
 
-    public function socialLogin(LoginSocialRequest $request, OdnoklassnikiProvider $odnoklassnikiProvider, $provider)
+    public function socialLogin(LoginSocialRequest $request, $provider)
     {
-        if ('odnoklassniki' === $provider) {
-            $url = $odnoklassnikiProvider->getRedirectUrl();
-        } else {
-            $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
-        }
-
-        return response()->json(['url' => $url]);
+        return response()->json(['url' => Socialite::driver($provider)->stateless()->redirect()->getTargetUrl()]);
     }
 
     public function googleLoginCallback(Request $request, UserService $service, JWTAuth $auth)
@@ -108,7 +102,7 @@ class AuthController extends Controller
         return redirect(config('defaults.frontend_url') . "/complete-social-auth?token={$token}");
     }
 
-    public function odnoklassnikiLoginCallback(Request $request, UserService $service, OdnoklassnikiProvider $provider, JWTAuth $auth)
+    public function odnoklassnikiLoginCallback(Request $request, UserService $service, JWTAuth $auth)
     {
         $token = $service->createOrLoginFormSocial(Socialite::driver('odnoklassniki')->stateless()->user(), 'odnoklassniki');
 

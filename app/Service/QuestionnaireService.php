@@ -26,9 +26,12 @@ class QuestionnaireService extends Service
         $this->resultsRepository = app(QuestionnaireResultRepository::class);
     }
 
-    public function create(int $userId, array $data)
+    public function create(int $userId, int $roleId, array $data)
     {
-        $data['user_id'] = $userId;
+        if (Role::ROLE_ADMIN !== $roleId) {
+            $data['user_id'] = $userId;
+        }
+
         $data['max_score'] = $this->calculateMaxScore($data['content']);
 
         return $this->repository->create($data);

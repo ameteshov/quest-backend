@@ -20,7 +20,7 @@ class QuestionnaireController extends Controller
 {
     public function create(CreateRequest $request, QuestionnaireService $service)
     {
-        $entity = $service->create($request->user()->id, $request->all());
+        $entity = $service->create($request->user()->id, $request->user()->role_id, $request->all());
 
         return response()->json($entity);
     }

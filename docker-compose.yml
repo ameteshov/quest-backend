@@ -7,7 +7,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./:/app
+      - ./:/app:delegated
       - ./docker/nginx/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     working_dir: /app
     depends_on:
@@ -17,7 +17,7 @@ services:
     ports:
       - 3307:3306
     volumes:
-      - ./docker/mysql/lib/:/var/lib/mysql
+      - ./docker/mysql/lib/:/var/lib/mysql:delegated
       - ./docker/mysql/dump/:/var/local
     environment:
       MYSQL_ROOT_PASSWORD: root

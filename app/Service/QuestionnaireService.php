@@ -84,6 +84,7 @@ class QuestionnaireService extends Service
         $result = $this->resultsRepository->findBy([
             'user_id' => $senderId,
             'email' => $recipientData['email'],
+            'questionnaire_id' => $id
         ]);
 
         if (!empty($result)) {

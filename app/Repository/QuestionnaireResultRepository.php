@@ -34,14 +34,14 @@ class QuestionnaireResultRepository extends Repository
     public function getStatisticForUser(int $userId, array $vacancies = [])
     {
         $query = $this->getQuery()
-            ->addSelect(DB::raw('sum(score) as score_sum'))
+            ->addSelect(DB::raw('sum(coalesce(score, 0)) as score_sum'))
             ->addSelect(DB::raw('sum(questionnaires.max_score) as score_max'))
             ->addSelect(['email', 'recipient_name', 'vacancy'])
             ->where('questionnaires_results.user_id', $userId)
             ->where('questionnaires_results.is_passed', true)
-            ->whereHas('questionnaire', function ($query) {
-                $query->whereNotNull('questionnaires.type_id');
-            })
+//            ->whereHas('questionnaire', function ($query) {
+//                $query->whereNotNull('questionnaires.type_id');
+//            })
             ->join('questionnaires', 'questionnaires_results.questionnaire_id', '=', 'questionnaires.id')
             ->groupBy('email')
             ->groupBy('vacancy')

@@ -71,7 +71,7 @@ class YandexPaymentClient implements PaymentClientInterface
 
     protected function buildCreateRequestData(array $paymentData): array
     {
-        return [
+        $object = [
             'amount' => [
                 'value' => array_get($paymentData, 'amount'),
                 'currency' => array_get($paymentData, 'currency', config('defaults.checkout.default_currency'))
@@ -84,6 +84,10 @@ class YandexPaymentClient implements PaymentClientInterface
             'description' => array_get($paymentData, 'description'),
             'capture' => true
         ];
+
+        logger($object);
+
+        return $object;
     }
 
     protected function getPaymentMethodData(array $paymentData): array
@@ -95,10 +99,10 @@ class YandexPaymentClient implements PaymentClientInterface
             $result['payment_purpose'] = 'Оплата в системе hr-tophunter.ru';
             $result['vat_data'] = [
                 'type' => 'calculated',
-                'rate' => 18,
+                'rate' => 20,
                 'amount' => [
                     'currency' => 'RUB',
-                    'value' => (int)round((int)$paymentData['amount'] * 0.18)
+                    'value' => (int)round((int)$paymentData['amount'] * 0.2)
                 ]
             ];
         }

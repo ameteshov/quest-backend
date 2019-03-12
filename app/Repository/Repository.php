@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Support\Interfaces\ModelRepositoryInterface;
 use App\Support\Traits\SearchTrait;
 use Illuminate\Database\Eloquent\Builder;
+use tests\Mockery\Adapter\Phpunit\EmptyTestCase;
 
 class Repository implements ModelRepositoryInterface
 {
@@ -17,6 +18,15 @@ class Repository implements ModelRepositoryInterface
         $entity = $this->first(['id' => $id], $with);
 
         return empty($entity) ? [] : $entity->toArray();
+    }
+
+    public function get(array $with = []): array
+    {
+        $collection = $this->getQuery()
+            ->with($with)
+            ->get();
+
+        return empty($collection) ? [] : $collection->toArray();
     }
 
     public function count(?array $where = [])

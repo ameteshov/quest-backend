@@ -49,6 +49,15 @@ class UserRepository extends Repository
             ->first();
     }
 
+    public function getSubscribed()
+    {
+        $users = $this->getQuery()
+            ->whereNotNull('subscribed_before')
+            ->get();
+
+        return empty($users) ? [] : $users->toArray();
+    }
+
     protected function filterByCurrentUser(): ModelRepositoryInterface
     {
         if (array_has($this->filters, 'current_user_id')) {

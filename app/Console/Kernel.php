@@ -25,7 +25,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('queue:work --daemon --once')
-                  ->withoutOverlapping();
+             ->withoutOverlapping();
+
+         $schedule->command('payments:close')
+             ->everyMinute()
+             ->withoutOverlapping();
+
+         $schedule->command('subscriptions:expire')
+             ->daily()
+             ->withoutOverlapping();
     }
 
     /**

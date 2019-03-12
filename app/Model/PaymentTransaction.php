@@ -20,6 +20,6 @@ class PaymentTransaction extends Model
 
     public function plan()
     {
-        return $this->belongsTo(Plan::class, 'payment_id', 'id');
+        return $this->belongsTo(Plan::class, 'plan_id', 'id');
     }
 }

@@ -98,7 +98,7 @@ class YandexPaymentClient implements PaymentClientInterface
                 'rate' => 18,
                 'amount' => [
                     'currency' => 'RUB',
-                    'value' => round((int)$paymentData['amount'] * 0.18)
+                    'value' => (int)round((int)$paymentData['amount'] * 0.18)
                 ]
             ];
         }

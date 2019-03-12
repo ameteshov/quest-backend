@@ -95,10 +95,10 @@ class YandexPaymentClient implements PaymentClientInterface
             $result['payment_purpose'] = 'Оплата в системе hr-tophunter.ru';
             $result['vat_data'] = [
                 'type' => 'calculated',
-                'rate' => 0,
+                'rate' => 18,
                 'amount' => [
                     'currency' => 'RUB',
-                    'value' => '0.00'
+                    'value' => round((int)$paymentData['amount']['value'] * 0.18, 2)
                 ]
             ];
         }
